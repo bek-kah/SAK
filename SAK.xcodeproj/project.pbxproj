@@ -1,0 +1,422 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		470CB6442EB8162200B9B4DD /* WorkoutTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CB6432EB8162200B9B4DD /* WorkoutTileView.swift */; };
+		470CB6462EB8164700B9B4DD /* ActivityTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CB6452EB8164700B9B4DD /* ActivityTileView.swift */; };
+		470CB6482EB8166100B9B4DD /* WeightTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CB6472EB8166100B9B4DD /* WeightTileView.swift */; };
+		4720E60F2EAEA1C7002ED667 /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4720E60E2EAEA1C7002ED667 /* Exercise.swift */; };
+		474EC1D32EDA8C5800FD6312 /* EditWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474EC1D22EDA8C5800FD6312 /* EditWorkoutView.swift */; };
+		4752DBD82E9B554200DA6124 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4752DBD02E9B554200DA6124 /* Assets.xcassets */; };
+		4752DBD92E9B554200DA6124 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4752DBD12E9B554200DA6124 /* ContentView.swift */; };
+		4752DBDA2E9B554200DA6124 /* ExerciseSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4752DBD22E9B554200DA6124 /* ExerciseSelectionView.swift */; };
+		4752DBDB2E9B554200DA6124 /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4752DBD32E9B554200DA6124 /* HealthStore.swift */; };
+		4752DBDC2E9B554200DA6124 /* NewWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4752DBD42E9B554200DA6124 /* NewWorkoutView.swift */; };
+		4752DBDD2E9B554200DA6124 /* SAKApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4752DBD62E9B554200DA6124 /* SAKApp.swift */; };
+		479B6E822EA95DA00002693E /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479B6E812EA95DA00002693E /* DashboardView.swift */; };
+		479B6E842EA95E040002693E /* ShapeTileViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479B6E832EA95E040002693E /* ShapeTileViews.swift */; };
+		47A8CA7B2E9EACE2001B0451 /* DaysScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A8CA7A2E9EACE2001B0451 /* DaysScrollView.swift */; };
+		47FB3E862EA1DB1400EB97A6 /* StackedActivityRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB3E852EA1DB1400EB97A6 /* StackedActivityRingView.swift */; };
+		47FB3E882EA1DBE300EB97A6 /* ActivityRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB3E872EA1DBE300EB97A6 /* ActivityRingView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		470CB6432EB8162200B9B4DD /* WorkoutTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutTileView.swift; sourceTree = "<group>"; };
+		470CB6452EB8164700B9B4DD /* ActivityTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTileView.swift; sourceTree = "<group>"; };
+		470CB6472EB8166100B9B4DD /* WeightTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightTileView.swift; sourceTree = "<group>"; };
+		4720E60E2EAEA1C7002ED667 /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
+		472A18592E909DE10089F546 /* SAK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAK.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		474EC1D22EDA8C5800FD6312 /* EditWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWorkoutView.swift; sourceTree = "<group>"; };
+		4752DBD02E9B554200DA6124 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4752DBD12E9B554200DA6124 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		4752DBD22E9B554200DA6124 /* ExerciseSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseSelectionView.swift; sourceTree = "<group>"; };
+		4752DBD32E9B554200DA6124 /* HealthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStore.swift; sourceTree = "<group>"; };
+		4752DBD42E9B554200DA6124 /* NewWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWorkoutView.swift; sourceTree = "<group>"; };
+		4752DBD52E9B554200DA6124 /* SAK.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SAK.entitlements; sourceTree = "<group>"; };
+		4752DBD62E9B554200DA6124 /* SAKApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SAKApp.swift; sourceTree = "<group>"; };
+		479B6E812EA95DA00002693E /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		479B6E832EA95E040002693E /* ShapeTileViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeTileViews.swift; sourceTree = "<group>"; };
+		47A8CA7A2E9EACE2001B0451 /* DaysScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysScrollView.swift; sourceTree = "<group>"; };
+		47FB3E852EA1DB1400EB97A6 /* StackedActivityRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackedActivityRingView.swift; sourceTree = "<group>"; };
+		47FB3E872EA1DBE300EB97A6 /* ActivityRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRingView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		472A18562E909DE10089F546 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		470CB6492EB816C400B9B4DD /* TileViews */ = {
+			isa = PBXGroup;
+			children = (
+				479B6E832EA95E040002693E /* ShapeTileViews.swift */,
+				470CB6472EB8166100B9B4DD /* WeightTileView.swift */,
+				470CB6452EB8164700B9B4DD /* ActivityTileView.swift */,
+				470CB6432EB8162200B9B4DD /* WorkoutTileView.swift */,
+			);
+			path = TileViews;
+			sourceTree = "<group>";
+		};
+		470CB64A2EB816F700B9B4DD /* ActivityRing */ = {
+			isa = PBXGroup;
+			children = (
+				47FB3E852EA1DB1400EB97A6 /* StackedActivityRingView.swift */,
+				47FB3E872EA1DBE300EB97A6 /* ActivityRingView.swift */,
+			);
+			path = ActivityRing;
+			sourceTree = "<group>";
+		};
+		472A18502E909DE10089F546 = {
+			isa = PBXGroup;
+			children = (
+				4752DBD72E9B554200DA6124 /* SAK */,
+				472A185A2E909DE10089F546 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		472A185A2E909DE10089F546 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				472A18592E909DE10089F546 /* SAK.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4752DBD72E9B554200DA6124 /* SAK */ = {
+			isa = PBXGroup;
+			children = (
+				470CB64A2EB816F700B9B4DD /* ActivityRing */,
+				470CB6492EB816C400B9B4DD /* TileViews */,
+				4752DBD12E9B554200DA6124 /* ContentView.swift */,
+				479B6E812EA95DA00002693E /* DashboardView.swift */,
+				47A8CA7A2E9EACE2001B0451 /* DaysScrollView.swift */,
+				474EC1D22EDA8C5800FD6312 /* EditWorkoutView.swift */,
+				4752DBD42E9B554200DA6124 /* NewWorkoutView.swift */,
+				4752DBD22E9B554200DA6124 /* ExerciseSelectionView.swift */,
+				4752DBD32E9B554200DA6124 /* HealthStore.swift */,
+				4720E60E2EAEA1C7002ED667 /* Exercise.swift */,
+				4752DBD62E9B554200DA6124 /* SAKApp.swift */,
+				4752DBD02E9B554200DA6124 /* Assets.xcassets */,
+				4752DBD52E9B554200DA6124 /* SAK.entitlements */,
+			);
+			path = SAK;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		472A18582E909DE10089F546 /* SAK */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 472A18642E909DE20089F546 /* Build configuration list for PBXNativeTarget "SAK" */;
+			buildPhases = (
+				472A18552E909DE10089F546 /* Sources */,
+				472A18562E909DE10089F546 /* Frameworks */,
+				472A18572E909DE10089F546 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SAK;
+			packageProductDependencies = (
+			);
+			productName = SAK;
+			productReference = 472A18592E909DE10089F546 /* SAK.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		472A18512E909DE10089F546 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					472A18582E909DE10089F546 = {
+						CreatedOnToolsVersion = 26.0;
+					};
+				};
+			};
+			buildConfigurationList = 472A18542E909DE10089F546 /* Build configuration list for PBXProject "SAK" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 472A18502E909DE10089F546;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 472A185A2E909DE10089F546 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				472A18582E909DE10089F546 /* SAK */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		472A18572E909DE10089F546 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4752DBD82E9B554200DA6124 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		472A18552E909DE10089F546 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				470CB6442EB8162200B9B4DD /* WorkoutTileView.swift in Sources */,
+				479B6E842EA95E040002693E /* ShapeTileViews.swift in Sources */,
+				4752DBD92E9B554200DA6124 /* ContentView.swift in Sources */,
+				47FB3E862EA1DB1400EB97A6 /* StackedActivityRingView.swift in Sources */,
+				4752DBDA2E9B554200DA6124 /* ExerciseSelectionView.swift in Sources */,
+				474EC1D32EDA8C5800FD6312 /* EditWorkoutView.swift in Sources */,
+				4752DBDB2E9B554200DA6124 /* HealthStore.swift in Sources */,
+				470CB6482EB8166100B9B4DD /* WeightTileView.swift in Sources */,
+				479B6E822EA95DA00002693E /* DashboardView.swift in Sources */,
+				4720E60F2EAEA1C7002ED667 /* Exercise.swift in Sources */,
+				4752DBDC2E9B554200DA6124 /* NewWorkoutView.swift in Sources */,
+				470CB6462EB8164700B9B4DD /* ActivityTileView.swift in Sources */,
+				47A8CA7B2E9EACE2001B0451 /* DaysScrollView.swift in Sources */,
+				4752DBDD2E9B554200DA6124 /* SAKApp.swift in Sources */,
+				47FB3E882EA1DBE300EB97A6 /* ActivityRingView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		472A18622E909DE20089F546 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 6BB26UGW9Q;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		472A18632E909DE20089F546 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 6BB26UGW9Q;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		472A18652E909DE20089F546 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SAK/SAK.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6BB26UGW9Q;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "The app needs the user's health information to display it to them.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bek-kah.SAK";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		472A18662E909DE20089F546 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SAK/SAK.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6BB26UGW9Q;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "The app needs the user's health information to display it to them.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bek-kah.SAK";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		472A18542E909DE10089F546 /* Build configuration list for PBXProject "SAK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				472A18622E909DE20089F546 /* Debug */,
+				472A18632E909DE20089F546 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		472A18642E909DE20089F546 /* Build configuration list for PBXNativeTarget "SAK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				472A18652E909DE20089F546 /* Debug */,
+				472A18662E909DE20089F546 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 472A18512E909DE10089F546 /* Project object */;
+}
