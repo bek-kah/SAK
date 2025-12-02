@@ -14,6 +14,7 @@ struct ExerciseSelectionView: View {
                             Spacer()
                             Button("Add") {
                                 exercises.append(Exercise(name: title))
+                                title = ""
                             }
                             .foregroundStyle(.secondary)
                             .buttonStyle(.plain)
