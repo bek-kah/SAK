@@ -20,7 +20,7 @@ struct WorkoutTileView: View {
             }
             .padding(.bottom)
             
-                ForEach(workout.exercises, id: \.id) { exercise in
+                ForEach(workout.sortedExercises, id: \.id) { exercise in
                     HStack {
                         Text(exercise.name)
                             .font(.system(size: 15, weight: .regular))
@@ -46,8 +46,6 @@ struct WorkoutTileView: View {
                     showingDeleteAlert = true
                 } label: {
                     Image(systemName: "trash")
-                        .padding(.horizontal, 4)
-                        .padding(.vertical, 2)
                 }
                 .buttonStyle(.bordered)
                 .tint(.red)

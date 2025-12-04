@@ -18,7 +18,7 @@ struct EditWorkoutView: View {
         self.workout = workout
         self.title = workout.name
         self.selectedDay = workout.day
-        self.exercises = workout.exercises
+        self.exercises = workout.sortedExercises
     }
     
     var body: some View {

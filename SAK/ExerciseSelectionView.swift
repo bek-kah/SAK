@@ -13,7 +13,7 @@ struct ExerciseSelectionView: View {
                             TextField("Push-ups", text: $title)
                             Spacer()
                             Button("Add") {
-                                exercises.append(Exercise(name: title))
+                                exercises.append(Exercise(name: title, orderIndex: exercises.count))
                                 title = ""
                             }
                             .foregroundStyle(.secondary)
@@ -30,12 +30,8 @@ struct ExerciseSelectionView: View {
                             ForEach(exercises, id: \.self) { exercise in
                                 Text(exercise.name)
                             }
-                            .onDelete { indexSet in
-                                exercises.remove(atOffsets: indexSet)
-                            }
-                            .onMove { indices, newOffset in
-                                exercises.move(fromOffsets: indices, toOffset: newOffset)
-                            }
+                            .onDelete(perform: delete)
+                            .onMove(perform: move)
                         }
                     }
                 }
@@ -48,5 +44,20 @@ struct ExerciseSelectionView: View {
         .font(.system(size: 14, weight: .medium))
         .fontWidth(.expanded)
     }
+    
+    func delete(indexSet: IndexSet) {
+        exercises.remove(atOffsets: indexSet)
+        
+        for i in exercises.indices {
+            exercises[i].orderIndex = i
+        }
+    }
+    
+    func move(from source: IndexSet, to destination: Int) {
+        exercises.move(fromOffsets: source, toOffset: destination)
+        
+        for (index, exercise) in exercises.enumerated() {
+            exercise.orderIndex = index
+        }
+    }
 }
-

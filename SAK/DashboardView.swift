@@ -54,7 +54,7 @@ struct DashboardView: View {
             initialFetch()
         }
         .onAppear(perform: initialFetch)
-        .animation(.easeInOut, value: selectedDay)
+        .animation(.default, value: selectedDay)
     }
 }
 
