@@ -67,14 +67,15 @@ struct WorkoutTileView: View {
                 .buttonStyle(.bordered)
                 .foregroundStyle(.primary)
                 
-                Button { }
+                NavigationLink {
+                    WorkoutView(workout: workout)
+                }
                 label: {
                     if workout.exercises.allSatisfy(\.isComplete) {
-                        Text("Complete")
+                        Text("Completed")
                         
                     } else {
                         Text("Start")
-                        
                     }
                 }
                 .disabled(workout.exercises.allSatisfy(\.isComplete) )

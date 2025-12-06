@@ -8,7 +8,7 @@ struct SAKApp: App {
         
         let largeTitleAttrs: [NSAttributedString.Key: Any] = [
                     .font: UIFont.systemFont(
-                        ofSize: 30,
+                        ofSize: 24,
                         weight: .bold,
                         width: .expanded // 👈 Expanded San Francisco
                     )

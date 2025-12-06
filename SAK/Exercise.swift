@@ -23,7 +23,7 @@ class Workout {
             Exercise(name: "Shoulder Press", isComplete: true, orderIndex: 1),
             Exercise(name: "Fly", isComplete: false, orderIndex: 2)
         ]
-        let workout = Workout(name: "Chest + Shoulders + Traps", day: "Mondaay", exercises: exercises)
+        let workout = Workout(name: "Chest + Shoulders", day: "Mondaay", exercises: exercises)
         return workout
     }
 }
