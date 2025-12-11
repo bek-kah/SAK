@@ -20,24 +20,24 @@ struct WorkoutTileView: View {
             }
             .padding(.bottom)
             
-                ForEach(workout.sortedExercises, id: \.id) { exercise in
-                    HStack {
-                        Text(exercise.name)
-                            .font(.system(size: 15, weight: .regular))
-                            .fontWidth(.expanded)
-                            .foregroundStyle(.secondary)
-                        Spacer()
-                        Button {
-                            exercise.isComplete.toggle()
-                        } label: {
-                            Image(systemName: exercise.isComplete ? "checkmark.circle.fill" : "circle")
-                                .resizable()
-                                .frame(width: 24, height: 24)
-                        }
-                        .foregroundStyle(.tertiary)
+            ForEach(workout.sortedExercises, id: \.id) { exercise in
+                HStack {
+                    Button {
+                        exercise.isComplete.toggle()
+                    } label: {
+                        Image(systemName: exercise.isComplete ? "checkmark.circle.fill" : "circle")
+                            .resizable()
+                            .frame(width: 24, height: 24)
                     }
                     .padding(.trailing, 5)
-                    .padding(.vertical, 5)
+                    
+                    Text(exercise.name)
+                        .font(.system(size: 16, weight: .regular))
+                        .fontWidth(.expanded)
+                }
+                .foregroundStyle(.secondary)
+                .padding(.trailing, 5)
+                .padding(.vertical, 5)
             }
             
             
@@ -47,8 +47,8 @@ struct WorkoutTileView: View {
                 } label: {
                     Image(systemName: "trash")
                 }
-                .buttonStyle(.bordered)
                 .tint(.red)
+                .buttonStyle(.bordered)
                 .confirmationDialog(
                     Text("Are you sure?"),
                     isPresented: $showingDeleteAlert,
@@ -64,8 +64,7 @@ struct WorkoutTileView: View {
                 Spacer()
                 
                 Button("Edit", action: editWorkout)
-                .buttonStyle(.bordered)
-                .foregroundStyle(.primary)
+                    .foregroundStyle(.secondary)
                 
                 NavigationLink {
                     WorkoutView(workout: workout)
@@ -79,12 +78,11 @@ struct WorkoutTileView: View {
                     }
                 }
                 .disabled(workout.exercises.allSatisfy(\.isComplete) )
-                .buttonStyle(.borderedProminent)
-                .foregroundStyle(.background)
-                .tint(.primary)
+                .buttonStyle(.bordered)
+                .foregroundStyle(.primary)
             }
             .padding(.top)
-            .font(.system(size: 16, weight: .regular))
+            .font(.system(size: 17, weight: .regular))
             .fontWidth(.expanded)
             .animation(.easeInOut, value: workout.exercises.map(\.isComplete))
         }

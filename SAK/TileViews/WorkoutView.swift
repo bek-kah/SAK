@@ -9,22 +9,25 @@ struct WorkoutView: View {
     var body: some View {
         NavigationStack {
             List {
-                ForEach(workout.sortedExercises) { exercise in
+                ForEach(workout.sortedExercises, id: \.id) { exercise in
                     HStack {
-                        Text(exercise.name)
-                            .font(.system(size: 16, weight: .regular))
-                            .fontWidth(.expanded)
-                        Spacer()
                         Button {
                             exercise.isComplete.toggle()
                         } label: {
                             Image(systemName: exercise.isComplete ? "checkmark.circle.fill" : "circle")
                                 .resizable()
                                 .frame(width: 24, height: 24)
+                                .foregroundStyle(.green)
                         }
-                        .foregroundStyle(.primary)
+                        .padding(.trailing, 5)
+                        
+                        Text(exercise.name)
+                            .font(.system(size: 16, weight: .regular))
+                            .fontWidth(.expanded)
                     }
-                    .padding(5)
+                    .foregroundStyle(.secondary)
+                    .padding(.trailing, 5)
+                    .padding(.vertical, 5)
                 }
             }
             .navigationTitle(workout.name)
@@ -36,14 +39,15 @@ struct WorkoutView: View {
                     } label: {
                         HStack {
                             Text("Complete")
-                            Image(systemName: "checkmark")
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundStyle(.green)
                         }
-                        .font(.system(size: 20, weight: .regular))
-                        .fontWidth(.expanded)
+                        .padding(8)
                     }
-                    .buttonStyle(.borderedProminent)
-                    .foregroundStyle(.background)
-                    .tint(.primary)
+                    .buttonStyle(.bordered)
+                    .foregroundStyle(.primary)
+                    .font(.system(size: 20, weight: .regular))
+                    .fontWidth(.expanded)
                 }
             }
         }
