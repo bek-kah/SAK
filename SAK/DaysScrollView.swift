@@ -1,71 +1,141 @@
 import SwiftUI
 
-private var weekDates: [Date] {
+//private var weekDates: [Date] {
+//    let calendar = Calendar.current
+//    let today = Date()
+//    let weekday = calendar.component(.weekday, from: today)
+//    let startOfWeek = calendar.date(byAdding: .day, value: -(weekday - 1), to: today)!
+//    return (0..<7).compactMap { calendar.date(byAdding: .day, value: $0, to: startOfWeek) }
+//}
+//
+//func getSelectedDate(_ selectedDay: Int) -> Date {
+//    guard weekDates.indices.contains(selectedDay) else { return Date() }
+//    return weekDates[selectedDay]
+//}
+// Past and future 52 weeks, each with 7 Date values
+private var weeks: [[Date]] {
     let calendar = Calendar.current
     let today = Date()
-    let weekday = calendar.component(.weekday, from: today)
-    let startOfWeek = calendar.date(byAdding: .day, value: -(weekday - 1), to: today)!
-    return (0..<7).compactMap { calendar.date(byAdding: .day, value: $0, to: startOfWeek) }
+    let startOfCurrentWeek = calendar.dateInterval(of: .weekOfYear, for: today)?.start ?? today
+    
+    return (-52..<52).map { weekOffset in
+        let weekStart = calendar.date(byAdding: .weekOfYear, value: weekOffset, to: startOfCurrentWeek) ?? startOfCurrentWeek
+        
+        return (0..<7).compactMap { dayOffset in
+            calendar.date(byAdding: .day, value: dayOffset, to: weekStart)
+        }
+    }
 }
 
-func getSelectedDate(_ selectedDay: Int) -> Date {
-    guard weekDates.indices.contains(selectedDay) else { return Date() }
-    return weekDates[selectedDay]
+func getSelectedDate(_ index: Int) -> Date {
+    guard weeks.indices.contains(index / 7) else { return Date() }
+    guard weeks[index / 7].indices.contains(index % 7) else { return Date() }
+    
+    print("showing \(weeks[index / 7][index % 7].formatted())")
+    return weeks[index / 7][index % 7]
 }
 
 struct DaysScrollView: View {
-    private var currentDay: Int = Calendar.current.component(.weekday, from: Date()) - 1
+    @State private var currentWeek: [Date]? = []
+    @State private var currentWeekIndex: Int? = 0
+    private let daySymbols = Calendar.current.shortWeekdaySymbols
+    
+    var weekDays = ["S", "M", "T", "W", "T", "F", "S"]
+    
+    private var currentDay: Int {
+        52 * 7 + Calendar.current.component(.weekday, from: Date()) - 1
+    }
     @Binding private var selectedDay: Int
     
     init(selectedDay: Binding<Int>) {
         self._selectedDay = selectedDay
     }
     
-    private let daySymbols = Calendar.current.shortWeekdaySymbols
-    
     var body: some View {
-        HStack {
-            ForEach(Array(weekDates.enumerated()), id: \.offset) { index, date in
-                let dayName = String(daySymbols[index].prefix(1))
-                let dayNumber = Calendar.current.component(.day, from: date)
-                
-                VStack {
+        VStack(alignment: .leading) {
+            HStack {
+                ForEach(0..<7, id: \.self) { dayIndex in
+                    let dayName = String(daySymbols[dayIndex].prefix(1))
                     Text(dayName)
                         .font(.system(size: 14, weight: .bold))
                         .fontWidth(.expanded)
-                        .foregroundStyle(isSaturdayOrSunday(index) ? .secondary : .primary)
-                    
-                    ZStack {
-                        CircleTileView()
-                            .foregroundStyle(
-                                index == selectedDay && index == currentDay ? .red :
-                                selectedDay == index ? .primary : .clear
-                            )
-                        
-                        Button {
-                            selectedDay = index
-                        } label: {
-                            Text("\(dayNumber)")
-                                .font(.system(size: 14, weight: selectedDay == index ? .regular : .light))
-                                .fontWidth(.expanded)
-                                .foregroundStyle(
-                                    selectedDay == index ? Color(uiColor: .systemBackground) : (currentDay == index ? .red : isSaturdayOrSunday(index) ? .secondary : .primary)
-                                )
+                        .foregroundStyle(isSaturdayOrSunday(dayIndex) ? .secondary : .primary)
+                        .frame(maxWidth: .infinity)
+                }
+            }
+            
+            ScrollView(.horizontal) {
+                LazyHStack(spacing: 0) {
+                    ForEach(weeks.enumerated(), id: \.offset) { weekIndex, week in
+                        HStack {
+                            ForEach(Array(week.enumerated()), id: \.offset) { dayIndex, date in
+                                let dayNumber = Calendar.current.component(.day, from: date)
+                                let index = weekIndex * 7 + dayIndex
+                                ZStack {
+                                    CircleTileView()
+                                        .foregroundStyle(
+                                            index == selectedDay && index == currentDay ? .red :
+                                                selectedDay == index ? .primary : .clear
+                                        )
+                                    
+                                    Button {
+                                        selectedDay = index
+                                    } label: {
+                                        Text("\(dayNumber)")
+                                            .font(.system(size: 14, weight: selectedDay == index ? .regular : .light))
+                                            .fontWidth(.expanded)
+                                            .foregroundStyle(
+                                                selectedDay == index ? Color(uiColor: .systemBackground) : (currentDay == index ? .red : isSaturdayOrSunday(index) ? .secondary : .primary)
+                                            )
+                                    }
+                                }
+                            }
                         }
+                        .containerRelativeFrame(.horizontal)
+                        .id(week)
                     }
                 }
-                .frame(maxWidth: .infinity)
             }
+            .scrollTargetLayout()
+            .scrollTargetBehavior(.paging)
+            .scrollPosition(id: $currentWeekIndex)
+            .scrollIndicators(.hidden)
         }
         .padding(.top)
+        .onAppear {
+            currentWeekIndex = 52
+        }
     }
     
     func isSaturdayOrSunday(_ index: Int) -> Bool {
         index == 0 || index == 6
     }
+    
+    func getMonth() -> String {
+        guard let idx = currentWeekIndex, weeks.indices.contains(idx),
+              let firstDate = weeks[idx].first,
+              let lastDate = weeks[idx].last
+        else {
+            return ""
+        }
+        let formatter = DateFormatter()
+        formatter.locale = .current
+        formatter.dateFormat = "LLLL"
+        
+        let firstMonth = formatter.string(from: firstDate)
+        let lastMonth = formatter.string(from: lastDate)
+        
+        if firstMonth == lastMonth {
+            return firstMonth
+        } else {
+            return firstMonth + "-" + lastMonth
+        }
+
+    }
 }
 
 #Preview {
-    DaysScrollView(selectedDay: .constant(1))
+    DaysScrollView(selectedDay: .constant(52 * 7 + Calendar.current.component(.weekday, from: Date()) - 1))
 }
+
 

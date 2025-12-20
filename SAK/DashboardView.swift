@@ -30,11 +30,11 @@ struct DashboardView: View {
     
     var todaysWorkout: Workout? {
         workouts.first { workout in
-            workout.day == Calendar.current.weekdaySymbols[selectedDay]
+            workout.day == Calendar.current.weekdaySymbols[selectedDay % 7]
         }
     }
 
-    @State private var selectedDay: Int = Calendar.current.component(.weekday, from: Date()) - 1
+    @State private var selectedDay: Int = 52 * 7 + Calendar.current.component(.weekday, from: Date()) - 1
 
     let healthStore: HealthStore
 
@@ -44,11 +44,11 @@ struct DashboardView: View {
 
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
-            VStack(spacing: 12) {
+            VStack {
                 DaysScrollView(selectedDay: $selectedDay)
                 dashboardGrid
+                .padding(.horizontal)
             }
-            .padding(.horizontal)
         }
         .onChange(of: selectedDay) {
             initialFetch()

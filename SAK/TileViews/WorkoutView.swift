@@ -17,7 +17,6 @@ struct WorkoutView: View {
                             Image(systemName: exercise.isComplete ? "checkmark.circle.fill" : "circle")
                                 .resizable()
                                 .frame(width: 24, height: 24)
-                                .foregroundStyle(.green)
                         }
                         .padding(.trailing, 5)
                         
@@ -29,7 +28,9 @@ struct WorkoutView: View {
                     .padding(.trailing, 5)
                     .padding(.vertical, 5)
                 }
+                .listRowBackground(Color.clear)
             }
+
             .navigationTitle(workout.name)
             
             .safeAreaInset(edge: .bottom) {

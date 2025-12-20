@@ -10,7 +10,7 @@ struct SAKApp: App {
                     .font: UIFont.systemFont(
                         ofSize: 24,
                         weight: .bold,
-                        width: .expanded // 👈 Expanded San Francisco
+                        width: .expanded
                     )
                 ]
         
@@ -18,7 +18,7 @@ struct SAKApp: App {
                     .font: UIFont.systemFont(
                         ofSize: 20,
                         weight: .bold,
-                        width: .expanded // 👈 Expanded San Francisco
+                        width: .expanded
                     )
                 ]
         
