@@ -1,18 +1,5 @@
 import SwiftUI
 
-//private var weekDates: [Date] {
-//    let calendar = Calendar.current
-//    let today = Date()
-//    let weekday = calendar.component(.weekday, from: today)
-//    let startOfWeek = calendar.date(byAdding: .day, value: -(weekday - 1), to: today)!
-//    return (0..<7).compactMap { calendar.date(byAdding: .day, value: $0, to: startOfWeek) }
-//}
-//
-//func getSelectedDate(_ selectedDay: Int) -> Date {
-//    guard weekDates.indices.contains(selectedDay) else { return Date() }
-//    return weekDates[selectedDay]
-//}
-// Past and future 52 weeks, each with 7 Date values
 private var weeks: [[Date]] {
     let calendar = Calendar.current
     let today = Date()
@@ -22,7 +9,16 @@ private var weeks: [[Date]] {
         let weekStart = calendar.date(byAdding: .weekOfYear, value: weekOffset, to: startOfCurrentWeek) ?? startOfCurrentWeek
         
         return (0..<7).compactMap { dayOffset in
-            calendar.date(byAdding: .day, value: dayOffset, to: weekStart)
+            guard let day = calendar.date(byAdding: .day, value: dayOffset, to: weekStart) else {
+                return nil
+            }
+            
+            let startOfDay = calendar.startOfDay(for: day)
+            if let nextDay = calendar.date(byAdding: .day, value: 1, to: startOfDay),
+               let endOfDay = calendar.date(byAdding: .second, value: -1, to: nextDay) {
+                return endOfDay
+            }
+            return day
         }
     }
 }
