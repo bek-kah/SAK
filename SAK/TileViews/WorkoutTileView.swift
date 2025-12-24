@@ -7,8 +7,21 @@ struct WorkoutTileView: View {
     
     let removeWorkout: (Workout) -> Void?
     
+    @Binding var selectedDay: Int
+    
     @State private var showEditWorkout: Bool = false
     @State private var showingDeleteAlert: Bool = false
+    
+    init(
+        workout: Workout,
+        removeWorkout: @escaping (Workout) -> Void?,
+        selectedDay: Binding<Int>
+    ) {
+        self.workout = workout
+        self.removeWorkout = removeWorkout
+        self._selectedDay = selectedDay
+    }
+    
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -20,10 +33,11 @@ struct WorkoutTileView: View {
             }
             .padding(.bottom)
             
-            ForEach(workout.sortedExercises, id: \.id) { exercise in
+            ForEach(workout.exercises.sorted(), id: \.id) { exercise in
                 HStack {
                     Button {
                         exercise.isComplete.toggle()
+                        workout.saveWorkoutHistory(selectedDate: getSelectedDate(selectedDay), exercises: workout.exercises)
                     } label: {
                         Image(systemName: exercise.isComplete ? "checkmark.circle.fill" : "circle")
                             .resizable()
@@ -67,7 +81,7 @@ struct WorkoutTileView: View {
                     .foregroundStyle(.secondary)
                 
                 NavigationLink {
-                    WorkoutView(workout: workout)
+                    WorkoutView(workout: workout, selectedDay: $selectedDay)
                 }
                 label: {
                     if workout.exercises.allSatisfy(\.isComplete) {
@@ -90,6 +104,9 @@ struct WorkoutTileView: View {
         .sheet(isPresented: $showEditWorkout) {
             EditWorkoutView(workout: workout)
         }
+        .onChange(of: selectedDay) {
+            workout.loadWorkoutHistory(selectedDate: getSelectedDate(selectedDay))
+        }
     }
     
     func editWorkout() {
@@ -98,5 +115,8 @@ struct WorkoutTileView: View {
 }
 
 #Preview {
-    WorkoutTileView(workout: .fake, removeWorkout: { _ in })
+    WorkoutTileView(workout: .fake,
+                    removeWorkout: { _ in },
+                    selectedDay: .constant(1)
+    )
 }

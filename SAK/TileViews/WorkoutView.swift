@@ -6,10 +6,12 @@ struct WorkoutView: View {
     
     let workout: Workout
     
+    @Binding var selectedDay: Int
+    
     var body: some View {
         NavigationStack {
             List {
-                ForEach(workout.sortedExercises, id: \.id) { exercise in
+                ForEach(workout.exercises.sorted(), id: \.id) { exercise in
                     HStack {
                         Button {
                             exercise.isComplete.toggle()
@@ -56,5 +58,5 @@ struct WorkoutView: View {
 }
 
 #Preview {
-    WorkoutView(workout: .fake)
+    WorkoutView(workout: .fake, selectedDay: .constant(1))
 }

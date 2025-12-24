@@ -93,7 +93,11 @@ private extension DashboardView {
 
             GridRow {
                 if let workout = todaysWorkout {
-                    SquareTileView(currentType: .workout(workout), removeWorkout: removeWorkout, selectedDay: $selectedDay)
+                    SquareTileView(
+                        currentType: .workout(workout),
+                                   removeWorkout: removeWorkout,
+                                   selectedDay: $selectedDay
+                    )
                         .gridCellColumns(2)
                 }
                 

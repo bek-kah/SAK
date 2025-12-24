@@ -29,14 +29,19 @@ struct SquareTileView: View {
             
             switch currentType {
             case .weight(let weight, let weightDate, _):
-                WeightTileView(weight: weight, weightDate: weightDate)
+                WeightTileView(weight: weight,
+                               weightDate: weightDate)
                 
             case .activity(let moveProgress, let exerciseProgress, let standProgress):
-                ActivityTileView(moveProgress: moveProgress, exerciseProgress: exerciseProgress, standProgress: standProgress)
+                ActivityTileView(moveProgress: moveProgress,
+                                 exerciseProgress: exerciseProgress,
+                                 standProgress: standProgress)
                 
                 
             case .workout(let workout):
-                WorkoutTileView(workout: workout, removeWorkout: removeWorkout ?? { _ in })
+                WorkoutTileView(workout: workout,
+                                removeWorkout: removeWorkout ?? { _ in },
+                                selectedDay: $selectedDay)
                 
             case .none:
                 Text("")

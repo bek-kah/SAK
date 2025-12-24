@@ -7,14 +7,25 @@ class Workout {
     var name: String
     var day: String
     var exercises: [Exercise]
-    var sortedExercises: [Exercise] {
-        exercises.sorted()
-    }
+    var workoutHistory: [Date: [Exercise]] = [:]
     
     init(name: String, day: String, exercises: [Exercise]) {
         self.name = name
         self.day = day
         self.exercises = exercises
+    }
+    
+    func saveWorkoutHistory(selectedDate: Date, exercises: [Exercise]) {
+        workoutHistory[selectedDate] = exercises
+    }
+    
+    func loadWorkoutHistory(selectedDate: Date) {
+        if let exercises = workoutHistory[selectedDate] {
+            self.exercises = exercises
+            print("loading \(exercises.count) exercises for \(selectedDate.formatted())")
+        } else {
+            exercises = exercises.map { Exercise(name: $0.name, isComplete: false, orderIndex: $0.orderIndex) }
+        }
     }
     
     static var fake: Workout {
@@ -23,15 +34,13 @@ class Workout {
             Exercise(name: "Shoulder Press", isComplete: true, orderIndex: 1),
             Exercise(name: "Fly", isComplete: false, orderIndex: 2)
         ]
-        let workout = Workout(name: "Chest + Shoulders", day: "Mondaay", exercises: exercises)
+        let workout = Workout(name: "Chest + Shoulders", day: "Monday", exercises: exercises)
         return workout
     }
 }
 
 
-
-@Model
-class Exercise: Comparable {
+class Exercise: Comparable, Codable, Equatable {
     var id: UUID
     var name: String
     var isComplete: Bool
@@ -46,5 +55,9 @@ class Exercise: Comparable {
     
     static func < (lhs: Exercise, rhs: Exercise) -> Bool {
         return lhs.orderIndex < rhs.orderIndex
+    }
+    
+    static func == (lhs: Exercise, rhs: Exercise) -> Bool {
+        return lhs.id == rhs.id
     }
 }

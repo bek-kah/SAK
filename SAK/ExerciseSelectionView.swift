@@ -27,7 +27,7 @@ struct ExerciseSelectionView: View {
                             Text("No exercises yet")
                                 .foregroundStyle(.secondary)
                         } else {
-                            ForEach(exercises, id: \.self) { exercise in
+                            ForEach(exercises, id: \.id) { exercise in
                                 Text(exercise.name)
                             }
                             .onDelete(perform: delete)
