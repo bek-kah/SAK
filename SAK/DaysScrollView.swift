@@ -24,6 +24,10 @@ private var weeks: [[Date]] {
 }
 
 func getSelectedDate(_ index: Int) -> Date {
+    if index == 52 * 7 + Calendar.current.component(.weekday, from: Date()) - 1 {
+        return Date()
+    }
+    
     guard weeks.indices.contains(index / 7) else { return Date() }
     guard weeks[index / 7].indices.contains(index % 7) else { return Date() }
     

@@ -7,7 +7,7 @@ struct Weight {
     var wasUserEntered: Bool
 }
 
-struct Activity {
+struct Activity: Equatable {
     var noData: Bool
     var move: Double
     var moveGoal: Double
@@ -15,6 +15,18 @@ struct Activity {
     var exerciseGoal: Double
     var stand: Double
     var standGoal: Double
+    
+    static func == (lhs: Activity, rhs: Activity) -> Bool {
+        let noDataSame = lhs.noData == rhs.noData
+        let moveSame = lhs.move == rhs.move
+        let moveGoalSame = lhs.moveGoal == rhs.moveGoal
+        let exerciseSame = lhs.exercise == rhs.exercise
+        let exerciseGoalSame = lhs.exerciseGoal == rhs.exerciseGoal
+        let standSame = lhs.stand == rhs.stand
+        let standGoalSame = lhs.standGoal == rhs.standGoal
+        
+        return noDataSame && moveSame && moveGoalSame && exerciseSame && exerciseGoalSame && standSame && standGoalSame
+    }
 }
 
 
@@ -78,11 +90,7 @@ private extension DashboardView {
                         )
                     } else if i == 0, let activity = self.activity {
                         SquareTileView(
-                            currentType: .activity(
-                                activity.moveGoal > 0 ? activity.move / activity.moveGoal : 0,
-                                activity.exerciseGoal > 0 ? activity.exercise / activity.exerciseGoal : 0,
-                                activity.standGoal > 0 ? activity.stand / activity.standGoal : 0
-                            ),
+                            currentType: .activity(activity),
                             selectedDay: $selectedDay
                         )
                     } else {

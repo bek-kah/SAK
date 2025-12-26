@@ -12,12 +12,15 @@ struct StackedActivityRingView: View {
     private var middleRingValue: CGFloat
     private var innerRingValue: CGFloat
     
-    init(outterRingValue: CGFloat, middleRingValue: CGFloat, innerRingValue: CGFloat, size: CGFloat) {
+    private var scale: CGFloat
+    
+    init(outterRingValue: CGFloat, middleRingValue: CGFloat, innerRingValue: CGFloat, size: CGFloat, scale: CGFloat) {
         self.outterRingValue = outterRingValue
         self.middleRingValue = middleRingValue
         self.innerRingValue = innerRingValue
-        self.width = size
-        self.height = size
+        self.width = size * scale
+        self.height = size * scale
+        self.scale = scale
     }
     
     var config: StackedActivityRingViewConfig = .init()
@@ -26,23 +29,38 @@ struct StackedActivityRingView: View {
     
     var outerWidth: CGFloat { width }
     var outerHeight: CGFloat { height }
-    var middleWidth: CGFloat { abs(width - (2 * config.lineWidth)) }
-    var middleHeight: CGFloat { abs(height - (2 * config.lineWidth)) }
-    var innerWidth: CGFloat { abs(width - (4 * config.lineWidth)) }
-    var innerHeight: CGFloat { abs(height - (4 * config.lineWidth)) }
+    var middleWidth: CGFloat { abs(width - (2 * config.lineWidth * scale)) }
+    var middleHeight: CGFloat { abs(height - (2 * config.lineWidth * scale)) }
+    var innerWidth: CGFloat { abs(width - (4 * config.lineWidth * scale)) }
+    var innerHeight: CGFloat { abs(height - (4 * config.lineWidth * scale)) }
     
     var body: some View {
         ZStack {
-            ActivityRingView(progress: outterRingValue, mainColor: config.outterRingColor, lineWidth: config.lineWidth)
-                .frame(width: outerWidth, height: outerHeight)
-            ActivityRingView(progress: middleRingValue, mainColor: config.middleRingColor, lineWidth: config.lineWidth)
-                .frame(width: middleWidth, height: middleHeight)
-            ActivityRingView(progress: innerRingValue, mainColor: config.innerRingColor, lineWidth: config.lineWidth)
-                .frame(width: innerWidth, height: innerHeight)
+            ActivityRingView(
+                progress: outterRingValue,
+                mainColor: config.outterRingColor,
+                lineWidth: config.lineWidth,
+                scale: scale
+            )
+            .frame(width: outerWidth, height: outerHeight)
+            ActivityRingView(
+                progress: middleRingValue,
+                mainColor: config.middleRingColor,
+                lineWidth: config.lineWidth,
+                scale: scale
+            )
+            .frame(width: middleWidth, height: middleHeight)
+            ActivityRingView(
+                progress: innerRingValue,
+                mainColor: config.innerRingColor,
+                lineWidth: config.lineWidth,
+                scale: scale
+            )
+            .frame(width: innerWidth, height: innerHeight)
         }
     }
 }
 
 #Preview {
-    StackedActivityRingView(outterRingValue: 0.5, middleRingValue: 0.5, innerRingValue: 0.5, size: 200)
+    StackedActivityRingView(outterRingValue: 0.5, middleRingValue: 0.5, innerRingValue: 0.5, size: 200, scale: 1)
 }

@@ -20,10 +20,10 @@ struct ActivityRingView: View {
     }
     
     
-    init(progress: CGFloat, mainColor: Color, lineWidth: CGFloat) {
+    init(progress: CGFloat, mainColor: Color, lineWidth: CGFloat, scale: CGFloat = 1.0) {
         self.progress = progress
         self.mainColor = mainColor
-        self.lineWidth = lineWidth
+        self.lineWidth = lineWidth * scale
     }
     
     var body: some View {
