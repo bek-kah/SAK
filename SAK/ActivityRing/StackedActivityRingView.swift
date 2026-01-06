@@ -13,14 +13,23 @@ struct StackedActivityRingView: View {
     private var innerRingValue: CGFloat
     
     private var scale: CGFloat
+    private var noData: Bool
     
-    init(outterRingValue: CGFloat, middleRingValue: CGFloat, innerRingValue: CGFloat, size: CGFloat, scale: CGFloat) {
+    init(
+        outterRingValue: CGFloat,
+        middleRingValue: CGFloat,
+        innerRingValue: CGFloat,
+        size: CGFloat,
+        scale: CGFloat,
+        noData: Bool
+    ) {
         self.outterRingValue = outterRingValue
         self.middleRingValue = middleRingValue
         self.innerRingValue = innerRingValue
         self.width = size * scale
         self.height = size * scale
         self.scale = scale
+        self.noData = noData
     }
     
     var config: StackedActivityRingViewConfig = .init()
@@ -40,21 +49,24 @@ struct StackedActivityRingView: View {
                 progress: outterRingValue,
                 mainColor: config.outterRingColor,
                 lineWidth: config.lineWidth,
-                scale: scale
+                scale: scale,
+                noData: noData
             )
             .frame(width: outerWidth, height: outerHeight)
             ActivityRingView(
                 progress: middleRingValue,
                 mainColor: config.middleRingColor,
                 lineWidth: config.lineWidth,
-                scale: scale
+                scale: scale,
+                noData: noData
             )
             .frame(width: middleWidth, height: middleHeight)
             ActivityRingView(
                 progress: innerRingValue,
                 mainColor: config.innerRingColor,
                 lineWidth: config.lineWidth,
-                scale: scale
+                scale: scale,
+                noData: noData
             )
             .frame(width: innerWidth, height: innerHeight)
         }
@@ -62,5 +74,12 @@ struct StackedActivityRingView: View {
 }
 
 #Preview {
-    StackedActivityRingView(outterRingValue: 0.5, middleRingValue: 0.5, innerRingValue: 0.5, size: 200, scale: 1)
+    StackedActivityRingView(
+        outterRingValue: 0,
+        middleRingValue: 0.5,
+        innerRingValue: 0.5,
+        size: 200,
+        scale: 1,
+        noData: false
+    )
 }

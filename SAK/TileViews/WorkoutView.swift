@@ -49,6 +49,7 @@ struct WorkoutView: View {
             }
             .navigationTitle(workout.name)
             .navigationBarTitleDisplayMode(.inline)
+            .background(.regularMaterial)
             .onDisappear {
                 workout.saveWorkoutHistory(selectedDate: getSelectedDate(selectedDay))
             }
@@ -56,7 +57,7 @@ struct WorkoutView: View {
             .safeAreaInset(edge: .top) {
                 ZStack {
                     Rectangle()
-                        .fill(.tertiary)
+                        .fill(.ultraThinMaterial)
                         .frame(width: .infinity, height: 40)
                         .clipShape(.rect(cornerRadius: 15))
                     HStack {
@@ -76,9 +77,8 @@ struct WorkoutView: View {
                         Spacer()
                         
                         Text(formattedTime)
-                            .font(.system(size: 14, weight: .regular))
-                            .fontWidth(.expanded)
-                            .frame(minWidth: 80, alignment: .center)
+                            .font(.system(size: 16, weight: .regular, design: .monospaced))
+                            .frame(minWidth: 100, alignment: .center)
                         
                         Spacer()
                         

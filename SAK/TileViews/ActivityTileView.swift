@@ -77,7 +77,8 @@ struct ActivityTileView: View {
                         middleRingValue: exerciseProgress.isNaN ? 0 : exerciseProgress,
                         innerRingValue: standProgress.isNaN ? 0 : standProgress,
                         size: size,
-                        scale: 1
+                        scale: 1,
+                        noData: activity.noData
                     )
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                 }

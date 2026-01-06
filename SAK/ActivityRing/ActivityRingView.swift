@@ -7,6 +7,8 @@ struct ActivityRingView: View {
     private var mainColor: Color = .red
     private var lineWidth: CGFloat = 20
     
+    private var noData: Bool
+    
     var endColor: Color {
         mainColor.darker(by: 15.0)
     }
@@ -20,10 +22,11 @@ struct ActivityRingView: View {
     }
     
     
-    init(progress: CGFloat, mainColor: Color, lineWidth: CGFloat, scale: CGFloat = 1.0) {
+    init(progress: CGFloat, mainColor: Color, lineWidth: CGFloat, scale: CGFloat = 1.0, noData: Bool) {
         self.progress = progress
         self.mainColor = mainColor
         self.lineWidth = lineWidth * scale
+        self.noData = noData
     }
     
     var body: some View {
@@ -44,12 +47,13 @@ struct ActivityRingView: View {
                         style: StrokeStyle(lineWidth: lineWidth, lineCap: .round)
                     )
                     .rotationEffect(.degrees(-90))
+                    .opacity(noData ? 0 : 1)
                 
                 Circle()
                     .frame(width: lineWidth, height: lineWidth)
                     .foregroundColor(startColor)
                     .offset(y: -1 * (geo.size.height / 2))
-                
+                    .opacity(noData ? 0 : 1)
             }
             .rotationEffect(overlapRotation())
             .frame(idealWidth: 300, idealHeight: 300, alignment: .center)
@@ -69,7 +73,12 @@ struct ActivityRingView: View {
 }
 
 #Preview {
-    ActivityRingView(progress: 0, mainColor: .accentColor, lineWidth: 20)
+    ActivityRingView(
+        progress: 0,
+        mainColor: .accentColor,
+        lineWidth: 20,
+        noData: false
+    )
 }
 
 extension Color {
