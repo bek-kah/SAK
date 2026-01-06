@@ -40,7 +40,7 @@ struct DashboardView: View {
     @State var activity: Activity?
     @State var weight: Weight?
     
-    var todaysWorkout: Workout? {
+    var workout: Workout? {
         workouts.first { workout in
             workout.day == Calendar.current.weekdaySymbols[selectedDay % 7]
         }
@@ -64,6 +64,7 @@ struct DashboardView: View {
         }
         .onChange(of: selectedDay) {
             initialFetch()
+            workout?.loadWorkoutHistory(selectedDate: getSelectedDate(selectedDay))
         }
         .onAppear(perform: initialFetch)
         .animation(.default, value: selectedDay)
@@ -100,7 +101,7 @@ private extension DashboardView {
             }
 
             GridRow {
-                if let workout = todaysWorkout {
+                if let workout = workout {
                     SquareTileView(
                         currentType: .workout(workout),
                                    removeWorkout: removeWorkout,

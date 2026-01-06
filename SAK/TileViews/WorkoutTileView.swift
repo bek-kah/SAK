@@ -3,7 +3,7 @@ import SwiftUI
 struct WorkoutTileView: View {
     @Environment(\.dismiss) var dismiss
     
-    let workout: Workout
+    var workout: Workout
     
     let removeWorkout: (Workout) -> Void?
     
@@ -37,7 +37,7 @@ struct WorkoutTileView: View {
                 HStack {
                     Button {
                         exercise.isComplete.toggle()
-                        workout.saveWorkoutHistory(selectedDate: getSelectedDate(selectedDay), exercises: workout.exercises)
+                        workout.saveWorkoutHistory(selectedDate: getSelectedDate(selectedDay))
                     } label: {
                         Image(systemName: exercise.isComplete ? "checkmark.circle.fill" : "circle")
                             .resizable()
@@ -103,9 +103,6 @@ struct WorkoutTileView: View {
         .padding()
         .sheet(isPresented: $showEditWorkout) {
             EditWorkoutView(workout: workout)
-        }
-        .onChange(of: selectedDay) {
-            workout.loadWorkoutHistory(selectedDate: getSelectedDate(selectedDay))
         }
     }
     

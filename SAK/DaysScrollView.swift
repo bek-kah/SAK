@@ -24,10 +24,6 @@ private var weeks: [[Date]] {
 }
 
 func getSelectedDate(_ index: Int) -> Date {
-    if index == 52 * 7 + Calendar.current.component(.weekday, from: Date()) - 1 {
-        return Date()
-    }
-    
     guard weeks.indices.contains(index / 7) else { return Date() }
     guard weeks[index / 7].indices.contains(index % 7) else { return Date() }
     
@@ -37,7 +33,7 @@ func getSelectedDate(_ index: Int) -> Date {
 
 struct DaysScrollView: View {
     @State private var currentWeek: [Date]? = []
-    @State private var currentWeekIndex: Int? = 0
+    @State private var currentWeekIndex: Int?
     private let daySymbols = Calendar.current.shortWeekdaySymbols
     
     var weekDays = ["S", "M", "T", "W", "T", "F", "S"]
@@ -92,7 +88,7 @@ struct DaysScrollView: View {
                             }
                         }
                         .containerRelativeFrame(.horizontal)
-                        .id(week)
+                        .id(weekIndex)
                     }
                 }
             }
@@ -102,8 +98,11 @@ struct DaysScrollView: View {
             .scrollIndicators(.hidden)
         }
         .padding(.top)
+        .padding(.horizontal)
         .onAppear {
-            currentWeekIndex = 52
+            if currentWeekIndex == nil {
+                currentWeekIndex = 52
+            }
         }
     }
     

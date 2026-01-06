@@ -50,7 +50,7 @@ struct NewWorkoutView: View {
     }
     
     func save() {
-        let newWorkout = Workout(name: title, day: selectedDay, exercises: exercises)
+        let newWorkout = Workout(name: title, day: selectedDay, exercises: exercises, duration: 0)
         modelContext.insert(newWorkout)
     }
 }
