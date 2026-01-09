@@ -1,3 +1,4 @@
+import Foundation
 import HealthKit
 
 class HealthStore {
@@ -36,40 +37,80 @@ class HealthStore {
     }
     
     // Fetch weight date from HealthKit
+    //    func fetchWeight(
+    //        selectedDate: Date = Date(),
+    //        completion: @escaping (
+    //            _ pounds: Double,
+    //            _ date: Date?,
+    //            _ wasUserEntered: Bool
+    //        ) -> Void) {
+    //        let weightType = HKQuantityType.quantityType(forIdentifier: .bodyMass)!
+    //        let predicate = HKQuery.predicateForSamples(withStart: .distantPast, end: selectedDate, options: [])
+    //        let sort = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: false)
+    //
+    //        let query = HKSampleQuery(sampleType: weightType,
+    //                                  predicate: predicate,
+    //                                  limit: 1,
+    //                                  sortDescriptors: [sort]) { _, samples, error in
+    //            guard error == nil, let sample = samples?.first as? HKQuantitySample else {
+    //                DispatchQueue.main.async { completion(0, nil, false) } // No data
+    //                return
+    //            }
+    //
+    //            let pounds = sample.quantity.doubleValue(for: .pound())
+    //            let date = sample.endDate // or sample.startDate
+    //            let wasUserEntered = sample.metadata?[HKMetadataKeyWasUserEntered] as? Bool ?? false
+    //
+    //            DispatchQueue.main.async {
+    //                completion(pounds, date, wasUserEntered)
+    //            }
+    //        }
+    //
+    //        healthStore.execute(query)
+    //    }
+    
     func fetchWeight(
-        selectedDate: Date = Date(),
+        selectedDay: Date = Date(),
         completion: @escaping (
             _ pounds: Double,
             _ date: Date?,
             _ wasUserEntered: Bool
         ) -> Void) {
-        let weightType = HKQuantityType.quantityType(forIdentifier: .bodyMass)!
-        let predicate = HKQuery.predicateForSamples(withStart: .distantPast, end: selectedDate, options: [])
-        let sort = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: false)
-
-        let query = HKSampleQuery(sampleType: weightType,
-                                  predicate: predicate,
-                                  limit: 1,
-                                  sortDescriptors: [sort]) { _, samples, error in
-            guard error == nil, let sample = samples?.first as? HKQuantitySample else {
-                DispatchQueue.main.async { completion(0, nil, false) } // No data
-                return
+            let weightType = HKQuantityType.quantityType(forIdentifier: .bodyMass)!
+            
+            let calendar = Calendar.current
+            var comps = calendar.dateComponents([.year, .month, .day], from: selectedDay)
+            comps.calendar = calendar
+            let start = Calendar.current.startOfDay(for: selectedDay)
+            let end = Calendar.current.date(byAdding: .day, value: 1, to: start)!
+            
+            let predicate = HKQuery.predicateForSamples(withStart: start, end: end, options: [.strictStartDate])
+            
+            let sort = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: false)
+            
+            let query = HKSampleQuery(sampleType: weightType,
+                                      predicate: predicate,
+                                      limit: 1,
+                                      sortDescriptors: [sort]) { _, samples, error in
+                guard error == nil, let sample = samples?.first as? HKQuantitySample else {
+                    DispatchQueue.main.async { completion(0, nil, false) }
+                    return
+                }
+                
+                let pounds = sample.quantity.doubleValue(for: .pound())
+                let date = sample.endDate
+                let wasUserEntered = sample.metadata?[HKMetadataKeyWasUserEntered] as? Bool ?? false
+                
+                DispatchQueue.main.async {
+                    completion(pounds, date, wasUserEntered)
+                }
             }
-
-            let pounds = sample.quantity.doubleValue(for: .pound())
-            let date = sample.endDate // or sample.startDate
-            let wasUserEntered = sample.metadata?[HKMetadataKeyWasUserEntered] as? Bool ?? false
-
-            DispatchQueue.main.async {
-                completion(pounds, date, wasUserEntered)
-            }
+            
+            healthStore.execute(query)
         }
-
-        healthStore.execute(query)
-    }
     
     // Fetch today's activity summary from HealthKit
-    func fetchTodayActivitySummary(
+    func fetchActivitySummary(
         selectedDay: Date = Date(),
         completion: @escaping (
             _ noData: Bool,
@@ -83,7 +124,7 @@ class HealthStore {
         comps.calendar = calendar
         
         let predicate = HKQuery.predicateForActivitySummary(with: comps)
-
+        
         let query = HKActivitySummaryQuery(predicate: predicate) { _, summaries, error in
             if let error = error {
                 print("HKActivitySumamryQuery error:", error)
@@ -95,22 +136,22 @@ class HealthStore {
                 }
                 return
             }
-
+            
             // Values
             let move = summary.activeEnergyBurned.doubleValue(for: .kilocalorie())
             let exercise = summary.appleExerciseTime.doubleValue(for: .minute())
             let stand = summary.appleStandHours.doubleValue(for: .count())
-
+            
             // Goals
             let moveGoal = summary.activeEnergyBurnedGoal.doubleValue(for: .kilocalorie())
             let exerciseGoal = summary.appleExerciseTimeGoal.doubleValue(for: .minute())
             let standGoal = summary.appleStandHoursGoal.doubleValue(for: .count())
-
+            
             DispatchQueue.main.async {
                 completion(false, move, moveGoal, exercise, exerciseGoal, stand, standGoal)
             }
         }
-
+        
         healthStore.execute(query)
     }
 }

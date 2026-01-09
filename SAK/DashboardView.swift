@@ -84,9 +84,7 @@ private extension DashboardView {
                 ForEach(0..<2) { i in
                     if i == 1, let weight = self.weight {
                         SquareTileView(
-                            currentType: .weight(weight.value,
-                                                 weight.date ?? Date(),
-                                                 weight.wasUserEntered),
+                            currentType: .weight(weight),
                             selectedDay: $selectedDay
                         )
                     } else if i == 0, let activity = self.activity {
@@ -137,7 +135,7 @@ private extension DashboardView {
     }
 
     func fetchWeight() {
-        healthStore.fetchWeight(selectedDate: getSelectedDate(selectedDay)) { weight, date, userEntered in
+        healthStore.fetchWeight(selectedDay: getSelectedDate(selectedDay)) { weight, date, userEntered in
             self.weight = Weight(value: weight,
                                  date: date,
                                  wasUserEntered: userEntered)
@@ -145,7 +143,7 @@ private extension DashboardView {
     }
 
     func fetchActivitySummary() {
-        healthStore.fetchTodayActivitySummary(selectedDay: getSelectedDate(selectedDay)) { noData, move, moveGoal, exercise, exerciseGoal, stand, standGoal in
+        healthStore.fetchActivitySummary(selectedDay: getSelectedDate(selectedDay)) { noData, move, moveGoal, exercise, exerciseGoal, stand, standGoal in
             self.activity = Activity(noData: noData,
                                      move: move,
                                      moveGoal: moveGoal,

@@ -2,7 +2,7 @@ import SwiftUI
 
 struct SquareTileView: View {
     enum TileViewType {
-        case weight(Double, Date, Bool)
+        case weight(Weight)
         case activity(Activity)
         case workout(Workout)
         case none
@@ -28,9 +28,8 @@ struct SquareTileView: View {
             }
             
             switch currentType {
-            case .weight(let weight, let weightDate, _):
-                WeightTileView(weight: weight,
-                               weightDate: weightDate)
+            case .weight(let weight):
+                WeightTileView(weight: weight)
                 
             case .activity(let activity):
                 ActivityTileView(activity: activity)
