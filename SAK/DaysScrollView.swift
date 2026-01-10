@@ -80,9 +80,7 @@ struct DaysScrollView: View {
                                         Text("\(dayNumber)")
                                             .font(.system(size: 14, weight: selectedDay == index ? .regular : .light))
                                             .fontWidth(.expanded)
-                                            .foregroundStyle(
-                                                selectedDay == index ? Color(uiColor: .systemBackground) : (currentDay == index ? .red : isSaturdayOrSunday(index) ? .secondary : .primary)
-                                            )
+                                            .foregroundStyle(dayTextColor(index, dayIndex))
                                     }
                                 }
                             }
@@ -108,6 +106,20 @@ struct DaysScrollView: View {
     
     func isSaturdayOrSunday(_ index: Int) -> Bool {
         index == 0 || index == 6
+    }
+    
+    func dayTextColor(_ index: Int, _ dayIndex: Int) -> Color {
+        let isSelectedDay = index == selectedDay
+        let isCurrentDay = index == currentDay
+        let isWeekendDay = isSaturdayOrSunday(dayIndex)
+        
+        if isSelectedDay {
+            return .white
+        } else if isCurrentDay {
+            return .red
+        } else {
+            return isWeekendDay ? .secondary : .primary
+        }
     }
     
     func getMonth() -> String {

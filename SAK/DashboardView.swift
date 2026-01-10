@@ -46,12 +46,13 @@ struct DashboardView: View {
         }
     }
 
-    @State private var selectedDay: Int = 52 * 7 + Calendar.current.component(.weekday, from: Date()) - 1
+    @Binding private var selectedDay: Int
 
     let healthStore: HealthStore
 
-    init(healthStore: HealthStore) {
+    init(healthStore: HealthStore, selectedDay: Binding<Int>) {
         self.healthStore = healthStore
+        self._selectedDay = selectedDay
     }
 
     var body: some View {
