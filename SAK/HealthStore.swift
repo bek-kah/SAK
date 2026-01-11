@@ -4,7 +4,6 @@ import HealthKit
 class HealthStore {
     let healthStore = HKHealthStore()
     
-    // request permissions
     func requestAuthorization(completion: @escaping (Bool, Error?) -> Void) {
         let stepCountType = HKQuantityType.quantityType(forIdentifier: .stepCount)!
         let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
@@ -17,23 +16,6 @@ class HealthStore {
         healthStore.requestAuthorization(toShare: [], read: typesToRead) { success, error in
             completion(success, error)
         }
-    }
-    
-    // Fetch step count data from HealthKit
-    func fetchStepCount(completion: @escaping (Double) -> Void) {
-        let stepCountType = HKQuantityType.quantityType(forIdentifier: .stepCount)!
-        
-        let now = Date()
-        let startOfDay = Calendar.current.startOfDay(for: now)
-        let predicate = HKQuery.predicateForSamples(withStart: startOfDay, end: now, options: [.strictStartDate])
-        
-        let query = HKStatisticsQuery(quantityType: stepCountType, quantitySamplePredicate: predicate, options: .cumulativeSum) { _, result, _ in
-            let stepCount = result?.sumQuantity()?.doubleValue(for: .count()) ?? 0.0
-            DispatchQueue.main.async {
-                completion(stepCount)
-            }
-        }
-        healthStore.execute(query)
     }
 
     
@@ -77,7 +59,7 @@ class HealthStore {
             healthStore.execute(query)
         }
     
-    // Fetch today's activity summary from HealthKit
+
     func fetchActivitySummary(
         selectedDay: Date = Date(),
         completion: @escaping (
@@ -105,12 +87,10 @@ class HealthStore {
                 return
             }
             
-            // Values
             let move = summary.activeEnergyBurned.doubleValue(for: .kilocalorie())
             let exercise = summary.appleExerciseTime.doubleValue(for: .minute())
             let stand = summary.appleStandHours.doubleValue(for: .count())
             
-            // Goals
             let moveGoal = summary.activeEnergyBurnedGoal.doubleValue(for: .kilocalorie())
             let exerciseGoal = summary.appleExerciseTimeGoal.doubleValue(for: .minute())
             let standGoal = summary.appleStandHoursGoal.doubleValue(for: .count())

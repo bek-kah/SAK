@@ -7,43 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		470CB6442EB8162200B9B4DD /* WorkoutTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CB6432EB8162200B9B4DD /* WorkoutTileView.swift */; };
 		470CB6462EB8164700B9B4DD /* ActivityTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CB6452EB8164700B9B4DD /* ActivityTileView.swift */; };
 		470CB6482EB8166100B9B4DD /* WeightTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CB6472EB8166100B9B4DD /* WeightTileView.swift */; };
-		4720E60F2EAEA1C7002ED667 /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4720E60E2EAEA1C7002ED667 /* Exercise.swift */; };
-		474EC1D32EDA8C5800FD6312 /* EditWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474EC1D22EDA8C5800FD6312 /* EditWorkoutView.swift */; };
 		4752DBD82E9B554200DA6124 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4752DBD02E9B554200DA6124 /* Assets.xcassets */; };
 		4752DBD92E9B554200DA6124 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4752DBD12E9B554200DA6124 /* ContentView.swift */; };
-		4752DBDA2E9B554200DA6124 /* ExerciseSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4752DBD22E9B554200DA6124 /* ExerciseSelectionView.swift */; };
 		4752DBDB2E9B554200DA6124 /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4752DBD32E9B554200DA6124 /* HealthStore.swift */; };
-		4752DBDC2E9B554200DA6124 /* NewWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4752DBD42E9B554200DA6124 /* NewWorkoutView.swift */; };
 		4752DBDD2E9B554200DA6124 /* SAKApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4752DBD62E9B554200DA6124 /* SAKApp.swift */; };
 		479B6E822EA95DA00002693E /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479B6E812EA95DA00002693E /* DashboardView.swift */; };
 		479B6E842EA95E040002693E /* ShapeTileViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479B6E832EA95E040002693E /* ShapeTileViews.swift */; };
 		47A8CA7B2E9EACE2001B0451 /* DaysScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A8CA7A2E9EACE2001B0451 /* DaysScrollView.swift */; };
-		47C1E6182EE3DA1900CA4BDA /* WorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C1E6172EE3DA1900CA4BDA /* WorkoutView.swift */; };
 		47FB3E862EA1DB1400EB97A6 /* StackedActivityRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB3E852EA1DB1400EB97A6 /* StackedActivityRingView.swift */; };
 		47FB3E882EA1DBE300EB97A6 /* ActivityRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FB3E872EA1DBE300EB97A6 /* ActivityRingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		470CB6432EB8162200B9B4DD /* WorkoutTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutTileView.swift; sourceTree = "<group>"; };
 		470CB6452EB8164700B9B4DD /* ActivityTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTileView.swift; sourceTree = "<group>"; };
 		470CB6472EB8166100B9B4DD /* WeightTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightTileView.swift; sourceTree = "<group>"; };
-		4720E60E2EAEA1C7002ED667 /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
 		472A18592E909DE10089F546 /* SAK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAK.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		474EC1D22EDA8C5800FD6312 /* EditWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditWorkoutView.swift; sourceTree = "<group>"; };
 		4752DBD02E9B554200DA6124 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4752DBD12E9B554200DA6124 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		4752DBD22E9B554200DA6124 /* ExerciseSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseSelectionView.swift; sourceTree = "<group>"; };
 		4752DBD32E9B554200DA6124 /* HealthStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStore.swift; sourceTree = "<group>"; };
-		4752DBD42E9B554200DA6124 /* NewWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWorkoutView.swift; sourceTree = "<group>"; };
 		4752DBD52E9B554200DA6124 /* SAK.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SAK.entitlements; sourceTree = "<group>"; };
 		4752DBD62E9B554200DA6124 /* SAKApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SAKApp.swift; sourceTree = "<group>"; };
 		479B6E812EA95DA00002693E /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		479B6E832EA95E040002693E /* ShapeTileViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeTileViews.swift; sourceTree = "<group>"; };
 		47A8CA7A2E9EACE2001B0451 /* DaysScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysScrollView.swift; sourceTree = "<group>"; };
-		47C1E6172EE3DA1900CA4BDA /* WorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutView.swift; sourceTree = "<group>"; };
 		47FB3E852EA1DB1400EB97A6 /* StackedActivityRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackedActivityRingView.swift; sourceTree = "<group>"; };
 		47FB3E872EA1DBE300EB97A6 /* ActivityRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -65,8 +53,6 @@
 				479B6E832EA95E040002693E /* ShapeTileViews.swift */,
 				470CB6472EB8166100B9B4DD /* WeightTileView.swift */,
 				470CB6452EB8164700B9B4DD /* ActivityTileView.swift */,
-				470CB6432EB8162200B9B4DD /* WorkoutTileView.swift */,
-				47C1E6172EE3DA1900CA4BDA /* WorkoutView.swift */,
 			);
 			path = TileViews;
 			sourceTree = "<group>";
@@ -104,11 +90,7 @@
 				4752DBD12E9B554200DA6124 /* ContentView.swift */,
 				479B6E812EA95DA00002693E /* DashboardView.swift */,
 				47A8CA7A2E9EACE2001B0451 /* DaysScrollView.swift */,
-				474EC1D22EDA8C5800FD6312 /* EditWorkoutView.swift */,
-				4752DBD42E9B554200DA6124 /* NewWorkoutView.swift */,
-				4752DBD22E9B554200DA6124 /* ExerciseSelectionView.swift */,
 				4752DBD32E9B554200DA6124 /* HealthStore.swift */,
-				4720E60E2EAEA1C7002ED667 /* Exercise.swift */,
 				4752DBD62E9B554200DA6124 /* SAKApp.swift */,
 				4752DBD02E9B554200DA6124 /* Assets.xcassets */,
 				4752DBD52E9B554200DA6124 /* SAK.entitlements */,
@@ -188,18 +170,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				470CB6442EB8162200B9B4DD /* WorkoutTileView.swift in Sources */,
 				479B6E842EA95E040002693E /* ShapeTileViews.swift in Sources */,
-				47C1E6182EE3DA1900CA4BDA /* WorkoutView.swift in Sources */,
 				4752DBD92E9B554200DA6124 /* ContentView.swift in Sources */,
 				47FB3E862EA1DB1400EB97A6 /* StackedActivityRingView.swift in Sources */,
-				4752DBDA2E9B554200DA6124 /* ExerciseSelectionView.swift in Sources */,
-				474EC1D32EDA8C5800FD6312 /* EditWorkoutView.swift in Sources */,
 				4752DBDB2E9B554200DA6124 /* HealthStore.swift in Sources */,
 				470CB6482EB8166100B9B4DD /* WeightTileView.swift in Sources */,
 				479B6E822EA95DA00002693E /* DashboardView.swift in Sources */,
-				4720E60F2EAEA1C7002ED667 /* Exercise.swift in Sources */,
-				4752DBDC2E9B554200DA6124 /* NewWorkoutView.swift in Sources */,
 				470CB6462EB8164700B9B4DD /* ActivityTileView.swift in Sources */,
 				47A8CA7B2E9EACE2001B0451 /* DaysScrollView.swift in Sources */,
 				4752DBDD2E9B554200DA6124 /* SAKApp.swift in Sources */,

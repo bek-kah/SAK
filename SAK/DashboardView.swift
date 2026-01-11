@@ -29,28 +29,19 @@ struct Activity: Equatable {
     }
 }
 
-
 // MARK: - DashboardView
 struct DashboardView: View {
-    @Environment(\.modelContext) var modelContext
-    @Query var workouts: [Workout]
-    
-    @State var showNewWorkout: Bool = false
-    
     @State var activity: Activity?
     @State var weight: Weight?
-    
-    var workout: Workout? {
-        workouts.first { workout in
-            workout.day == Calendar.current.weekdaySymbols[selectedDay % 7]
-        }
-    }
 
     @Binding private var selectedDay: Int
 
     let healthStore: HealthStore
 
-    init(healthStore: HealthStore, selectedDay: Binding<Int>) {
+    init(
+        healthStore: HealthStore,
+        selectedDay: Binding<Int>
+    ) {
         self.healthStore = healthStore
         self._selectedDay = selectedDay
     }
@@ -65,7 +56,6 @@ struct DashboardView: View {
         }
         .onChange(of: selectedDay) {
             initialFetch()
-            workout?.loadWorkoutHistory(selectedDate: getSelectedDate(selectedDay))
         }
         .onAppear(perform: initialFetch)
         .animation(.default, value: selectedDay)
@@ -100,31 +90,11 @@ private extension DashboardView {
             }
 
             GridRow {
-                if let workout = workout {
-                    SquareTileView(
-                        currentType: .workout(workout),
-                                   removeWorkout: removeWorkout,
-                                   selectedDay: $selectedDay
-                    )
-                        .gridCellColumns(2)
-                }
-                
-            }
-
-            GridRow {
                 ForEach(0..<2) { _ in
                     SquareTileView(selectedDay: $selectedDay)
                 }
             }
         }
-        .sheet(isPresented: $showNewWorkout) {
-            NewWorkoutView()
-        }
-    }
-    
-    func removeWorkout(_ workout: Workout) {
-        modelContext.delete(workout)
-        try? modelContext.save()
     }
 }
 

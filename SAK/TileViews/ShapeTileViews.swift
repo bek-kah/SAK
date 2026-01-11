@@ -4,28 +4,19 @@ struct SquareTileView: View {
     enum TileViewType {
         case weight(Weight)
         case activity(Activity)
-        case workout(Workout)
         case none
     }
     
     var currentType: TileViewType = .none
     
-    var removeWorkout: ((Workout) -> Void)?
-    
     @Binding var selectedDay: Int
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            if case .workout = currentType {
-                Rectangle()
-                    .fill(.regularMaterial)
-                    .cornerRadius(15)
-            } else {
-                Rectangle()
-                    .fill(.regularMaterial)
-                    .aspectRatio(1, contentMode: .fit)
-                    .cornerRadius(15)
-            }
+            Rectangle()
+                .fill(.regularMaterial)
+                .aspectRatio(1, contentMode: .fit)
+                .cornerRadius(15)
             
             switch currentType {
             case .weight(let weight):
@@ -33,12 +24,6 @@ struct SquareTileView: View {
                 
             case .activity(let activity):
                 ActivityTileView(activity: activity)
-                
-                
-            case .workout(let workout):
-                WorkoutTileView(workout: workout,
-                                removeWorkout: removeWorkout ?? { _ in },
-                                selectedDay: $selectedDay)
                 
             case .none:
                 Text("")
@@ -61,14 +46,5 @@ struct RectangleTileView: View {
             .aspectRatio(4/5, contentMode: .fit)
             .frame(maxWidth: .infinity)
     }
-}
-
-
-#Preview {
-    SquareTileView(
-        currentType: .workout(.fake),
-        removeWorkout: { _ in },
-        selectedDay: .constant(1)
-    )
 }
 

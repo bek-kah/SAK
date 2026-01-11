@@ -55,7 +55,7 @@ struct DaysScrollView: View {
                     Text(dayName)
                         .font(.system(size: 14, weight: .bold))
                         .fontWidth(.expanded)
-                        .foregroundStyle(isSaturdayOrSunday(dayIndex) ? .secondary : .primary)
+                        .foregroundStyle(dayIndex == 0 || dayIndex == 6 ? .secondary : .primary)
                         .frame(maxWidth: .infinity)
                 }
             }
@@ -104,44 +104,24 @@ struct DaysScrollView: View {
         }
     }
     
-    func isSaturdayOrSunday(_ index: Int) -> Bool {
-        index == 0 || index == 6
-    }
-    
     func dayTextColor(_ index: Int, _ dayIndex: Int) -> Color {
         let isSelectedDay = index == selectedDay
         let isCurrentDay = index == currentDay
-        let isWeekendDay = isSaturdayOrSunday(dayIndex)
-        
+        let isWeekendDay = dayIndex == 0 || dayIndex == 6
+                
         if isSelectedDay {
-            return .white
-        } else if isCurrentDay {
+            return Color(uiColor: .systemBackground)
+        }
+        
+        if isCurrentDay {
             return .red
-        } else {
-            return isWeekendDay ? .secondary : .primary
         }
-    }
-    
-    func getMonth() -> String {
-        guard let idx = currentWeekIndex, weeks.indices.contains(idx),
-              let firstDate = weeks[idx].first,
-              let lastDate = weeks[idx].last
-        else {
-            return ""
-        }
-        let formatter = DateFormatter()
-        formatter.locale = .current
-        formatter.dateFormat = "LLLL"
         
-        let firstMonth = formatter.string(from: firstDate)
-        let lastMonth = formatter.string(from: lastDate)
-        
-        if firstMonth == lastMonth {
-            return firstMonth
+        if isWeekendDay {
+            return .secondary
         } else {
-            return firstMonth + "-" + lastMonth
+            return .primary
         }
-
     }
 }
 

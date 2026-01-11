@@ -22,7 +22,13 @@ struct ActivityRingView: View {
     }
     
     
-    init(progress: CGFloat, mainColor: Color, lineWidth: CGFloat, scale: CGFloat = 1.0, noData: Bool) {
+    init(
+        progress: CGFloat,
+        mainColor: Color,
+        lineWidth: CGFloat,
+        scale: CGFloat = 1.0,
+        noData: Bool
+    ) {
         self.progress = progress
         self.mainColor = mainColor
         self.lineWidth = lineWidth * scale

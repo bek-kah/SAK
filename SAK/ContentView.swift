@@ -4,7 +4,6 @@ import SwiftUI
 struct ContentView: View {
     // Dependencies
     private let healthStore = HealthStore()
-    @State private var showNewWorkout: Bool = false
     @State private var selectedDay: Int = 52 * 7 + Calendar.current.component(.weekday, from: Date()) - 1
     
     var selectedDateText: String {
@@ -30,15 +29,14 @@ struct ContentView: View {
                         }
                     }
                     
+                    ToolbarSpacer(placement: .topBarTrailing)
+                    
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
-                            showNewWorkout = true
+                            
                         } label: {
                             Image(systemName: "plus")
                                 .font(.system(size: 15, weight: .medium))
-                        }
-                        .sheet(isPresented: $showNewWorkout) {
-                            NewWorkoutView()
                         }
                     }
                 }
