@@ -4,6 +4,7 @@ struct SquareTileView: View {
     enum TileViewType {
         case weight(Weight)
         case activity(Activity)
+        case workout(Workout, WorkoutSession, (UUID) -> Void)
         case none
     }
     
@@ -13,10 +14,16 @@ struct SquareTileView: View {
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            Rectangle()
-                .fill(.regularMaterial)
-                .aspectRatio(1, contentMode: .fit)
-                .cornerRadius(15)
+            if case .workout = currentType {
+                Rectangle()
+                    .fill(.regularMaterial)
+                    .cornerRadius(15)
+            } else {
+                Rectangle()
+                    .fill(.regularMaterial)
+                    .aspectRatio(1, contentMode: .fit)
+                    .cornerRadius(15)
+            }
             
             switch currentType {
             case .weight(let weight):
@@ -24,6 +31,9 @@ struct SquareTileView: View {
                 
             case .activity(let activity):
                 ActivityTileView(activity: activity)
+                
+            case .workout(let workout, let session, let deleteSessions):
+                WorkoutTileView(workout: workout, workoutSession: session, deleteSessions: deleteSessions)
                 
             case .none:
                 Text("")

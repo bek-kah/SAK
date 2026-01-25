@@ -1,27 +1,15 @@
+import SwiftData
 import SwiftUI
 
 struct WorkoutTileView: View {
-    @Environment(\.dismiss) var dismiss
+    
+    @Environment(\.modelContext) private var modelContext
     
     var workout: Workout
+    @Bindable var workoutSession: WorkoutSession
+    var deleteSessions: (UUID) -> Void
     
-    let removeWorkout: (Workout) -> Void?
-    
-    @Binding var selectedDay: Int
-    
-    @State private var showEditWorkout: Bool = false
     @State private var showingDeleteAlert: Bool = false
-    
-    init(
-        workout: Workout,
-        removeWorkout: @escaping (Workout) -> Void?,
-        selectedDay: Binding<Int>
-    ) {
-        self.workout = workout
-        self.removeWorkout = removeWorkout
-        self._selectedDay = selectedDay
-    }
-    
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -33,19 +21,18 @@ struct WorkoutTileView: View {
             }
             .padding(.bottom)
             
-            ForEach(workout.exercises.sorted(), id: \.id) { exercise in
+            ForEach(workoutSession.completions, id:\.id) { exerciseCompletion in
                 HStack {
                     Button {
-                        exercise.isComplete.toggle()
-                        workout.saveWorkoutHistory(selectedDate: getSelectedDate(selectedDay))
+                        exerciseCompletion.isComplete.toggle()
                     } label: {
-                        Image(systemName: exercise.isComplete ? "checkmark.circle.fill" : "circle")
+                        Image(systemName: exerciseCompletion.isComplete ? "checkmark.circle.fill" : "circle")
                             .resizable()
                             .frame(width: 24, height: 24)
                     }
                     .padding(.trailing, 5)
                     
-                    Text(exercise.name)
+                    Text(fetchExerciseName(exerciseCompletion.exerciseID))
                         .font(.system(size: 16, weight: .regular))
                         .fontWidth(.expanded)
                 }
@@ -53,7 +40,6 @@ struct WorkoutTileView: View {
                 .padding(.trailing, 5)
                 .padding(.vertical, 5)
             }
-            
             
             HStack {
                 Button {
@@ -69,51 +55,49 @@ struct WorkoutTileView: View {
                     titleVisibility: .visible
                 ) {
                     Button("Delete", role: .destructive) {
-                        withAnimation {
-                            removeWorkout(workout)
-                        }
+                        deleteSessions(workout.id)
+                        modelContext.delete(workout)
                     }
                 }
                 
                 Spacer()
                 
-                Button("Edit", action: editWorkout)
+                Button("Edit", action: {})
                     .foregroundStyle(.secondary)
                 
                 NavigationLink {
-                    WorkoutView(workout: workout, selectedDay: $selectedDay)
+//                    WorkoutView(workout: workout, selectedDay: $selectedDay)
                 }
                 label: {
-                    if workout.exercises.allSatisfy(\.isComplete) {
+                    if workoutSession.completions.allSatisfy(\.isComplete) {
                         Text("Completed")
                         
                     } else {
                         Text("Start")
                     }
                 }
-                .disabled(workout.exercises.allSatisfy(\.isComplete) )
+                .disabled(workoutSession.completions.allSatisfy(\.isComplete) )
                 .buttonStyle(.bordered)
                 .foregroundStyle(.primary)
             }
             .padding(.top)
             .font(.system(size: 17, weight: .regular))
             .fontWidth(.expanded)
-            .animation(.easeInOut, value: workout.exercises.map(\.isComplete))
+            .animation(.easeInOut, value: workoutSession.completions.allSatisfy(\.isComplete))
         }
         .padding()
-        .sheet(isPresented: $showEditWorkout) {
-            EditWorkoutView(workout: workout)
-        }
     }
     
-    func editWorkout() {
-        showEditWorkout = true
+    func fetchExerciseName(_ exerciseID: UUID) -> String {
+        return workout.exercises.first(where: { $0.id == exerciseID })?.name ?? ""
+    }
+    
+    func deleteWorkout() {
+        
     }
 }
 
+
 #Preview {
-    WorkoutTileView(workout: .fake,
-                    removeWorkout: { _ in },
-                    selectedDay: .constant(1)
-    )
+    WorkoutTileView(workout: .fake("Sunday"), workoutSession: .fake("Sunday"), deleteSessions: {_ in } )
 }

@@ -6,6 +6,8 @@ struct ContentView: View {
     private let healthStore = HealthStore()
     @State private var selectedDay: Int = 52 * 7 + Calendar.current.component(.weekday, from: Date()) - 1
     
+    @State private var showNewWorkoutView: Bool = false
+    
     var selectedDateText: String {
         let selectedDate = getSelectedDate(selectedDay)
         let formatter = DateFormatter()
@@ -17,6 +19,9 @@ struct ContentView: View {
         NavigationStack {
             DashboardView(healthStore: healthStore, selectedDay: $selectedDay)
                 .navigationTitle("Fit-tick")
+                .sheet(isPresented: $showNewWorkoutView) {
+                    NewWorkoutView()
+                }
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
@@ -33,7 +38,7 @@ struct ContentView: View {
                     
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
-                            
+                            showNewWorkoutView = true
                         } label: {
                             Image(systemName: "plus")
                                 .font(.system(size: 15, weight: .medium))
