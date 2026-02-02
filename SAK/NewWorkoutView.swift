@@ -5,7 +5,11 @@ struct NewWorkoutView: View {
     @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
     
-    @State private var selectedWeekday: Int = 0
+    @State private var name: String = ""
+    @State private var weekday: Int = 0
+    @State private var exercises: [Exercise] = []
+    
+    @State private var showPicker: Bool = false
     
     var weekdays: [String] {
         let formatter = DateFormatter()
@@ -19,14 +23,79 @@ struct NewWorkoutView: View {
     }
     
     var body: some View {
-        Picker("Day", selection: $selectedWeekday) {
-            ForEach(0..<weekdays.count, id: \.self) {
-                Text(weekdays[$0])
+        NavigationStack {
+            List {
+                TextField("Name", text: $name)
+                
+                NavigationLink {
+                    NewExercisesView()
+                } label: {
+                    HStack {
+                        Text("Exercises")
+                        Spacer()
+                        Text("\(exercises.count)")
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                
+                
+                Button {
+                    withAnimation {
+                        showPicker.toggle()
+                    }
+                } label: {
+                    HStack {
+                        Text("Day")
+                        Spacer()
+                        Text(weekdays[weekday])
+                            .foregroundStyle(.secondary)
+                        Image(systemName: "chevron.up.chevron.down")
+                            .foregroundStyle(.secondary)
+                    }
+                    .tint(.primary)
+                }
+                
+                if showPicker {
+                    Picker("Day", selection: $weekday) {
+                        ForEach(0..<weekdays.count, id: \.self) {
+                            Text(weekdays[$0])
+                                .font(.system(size: 16, weight: .regular))
+                                .fontWidth(.expanded)
+                        }
+                    }
+                    .pickerStyle(.wheel)
+                }
+            }
+            .font(.system(size: 15, weight: .regular))
+            .fontWidth(.expanded)
+            .navigationTitle("New Workout")
+            .animation(.easeInOut, value: showPicker)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel", systemImage: "xmark", role: .cancel) {
+                        dismiss()
+                    }
+                }
+                
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Create", systemImage: "checkmark", role: .cancel) {
+                        let workout = Workout(
+                            name: name.trimmingCharacters(in: .whitespacesAndNewlines),
+                            day: weekdays[weekday],
+                            exercises: exercises
+                        )
+                        modelContext.insert(workout)
+                        dismiss()
+                    }
+                    .disabled(name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                }
             }
         }
-        Button("Create Workout") {
-            modelContext.insert(Workout.fake(weekdays[selectedWeekday]))
-            dismiss()
-        }
+
     }
+}
+
+
+#Preview {
+    NewWorkoutView()
 }

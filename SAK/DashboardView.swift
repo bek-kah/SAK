@@ -46,7 +46,7 @@ struct DashboardView: View {
         return workout
     }
     
-    @Binding private var selectedDay: Int
+    @Binding var selectedDay: Int
 
     let healthStore: HealthStore
 
@@ -78,7 +78,7 @@ struct DashboardView: View {
 }
 
 // MARK: - DashboardView Subviews
-private extension DashboardView {
+extension DashboardView {
     var dashboardGrid: some View {
         Grid(horizontalSpacing: 10, verticalSpacing: 10) {
             GridRow {
@@ -122,112 +122,4 @@ private extension DashboardView {
         }
         .animation(.easeInOut, value: allWorkouts)
     }
-    
-    func loadWorkoutSession() {
-        // If there are no workouts for today, then there are no sessions.
-        guard let todaysWorkout else {
-            todaysWorkoutSession = nil
-            return
-        }
-        let date = getSelectedDate(selectedDay)
-        
-        if let existing = findSession(
-            workoutID: todaysWorkout.id,
-            date: date
-        ) {
-            todaysWorkoutSession = existing
-        } else {
-            let newSession = createSession(
-                workoutID: todaysWorkout.id,
-                date: date
-            )
-            
-            newSession.completions = todaysWorkout.exercises.map {
-                ExerciseCompletion(exerciseID: $0.id)
-            }
-            
-            modelContext.insert(newSession)
-            todaysWorkoutSession = newSession
-        }
-    }
-    
-    func findSession(
-        workoutID: UUID,
-        date: Date
-    ) -> WorkoutSession? {
-        sessions.first {
-            $0.workoutID == workoutID &&
-            $0.date == date
-        }
-    }
-    
-    func findSessions(
-        workoutID: UUID
-    ) -> [WorkoutSession]? {
-        sessions.filter {
-            $0.workoutID == workoutID
-        }
-    }
-    
-    func createSession(
-        workoutID: UUID,
-        date: Date
-    ) -> WorkoutSession {
-        let session = WorkoutSession(
-            workoutID: workoutID,
-            date: date
-        )
-        modelContext.insert(session)
-        return session
-    }
-    
-    func deleteSessions(
-        workoutID: UUID
-    ) {
-        if let sessions = findSessions(workoutID: workoutID) {
-            for session in sessions {
-                modelContext.delete(session)
-            }
-        }
-    }
 }
-
-// MARK: - DashboardView Data Fetching
-private extension DashboardView {
-    func weekdayString(forOffset offset: Int) -> String {
-        let date = getSelectedDate(offset)
-
-        let formatter = DateFormatter()
-        formatter.locale = .current
-        formatter.dateFormat = "EEEE"
-
-        return formatter.string(from: date)
-    }
-
-    func initialFetch() {
-        loadWorkoutSession()
-        fetchWeight()
-        fetchActivitySummary()
-    }
-
-    func fetchWeight() {
-        healthStore.fetchWeight(selectedDay: getSelectedDate(selectedDay)) { weight, date, userEntered in
-            self.weight = Weight(value: weight,
-                                 date: date,
-                                 wasUserEntered: userEntered)
-        }
-    }
-
-    func fetchActivitySummary() {
-        healthStore.fetchActivitySummary(selectedDay: getSelectedDate(selectedDay)) { noData, move, moveGoal, exercise, exerciseGoal, stand, standGoal in
-            self.activity = Activity(noData: noData,
-                                     move: move,
-                                     moveGoal: moveGoal,
-                                     exercise: exercise,
-                                     exerciseGoal: exerciseGoal,
-                                     stand: stand,
-                                     standGoal: standGoal)
-        }
-    }
-}
-
