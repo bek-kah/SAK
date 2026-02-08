@@ -7,6 +7,9 @@ class Workout {
     var name: String
     var day: String
     var exercises: [Exercise]
+    var sortedExercises: [Exercise] {
+        exercises.sorted(by: { $0.position < $1.position })
+    }
     
     init(name: String, day: String, exercises: [Exercise]) {
         self.id = UUID()
@@ -20,9 +23,9 @@ class Workout {
             name: "Chest Day",
             day: day,
             exercises: [
-                Exercise(name: "Push-ups"),
-                Exercise(name: "Bench Press"),
-                Exercise(name: "Fly")
+                Exercise(name: "Push-ups", position: 0),
+                Exercise(name: "Bench Press", position: 1),
+                Exercise(name: "Fly", position: 2)
             ])
     }
 }
@@ -31,10 +34,12 @@ class Workout {
 class Exercise {
     var id: UUID
     var name: String
+    var position: Int
     
-    init(name: String) {
+    init(name: String, position: Int) {
         self.id = UUID()
         self.name = name
+        self.position = position
     }
 }
 
@@ -57,7 +62,9 @@ class WorkoutSession {
     static func fake(_ day: String) -> WorkoutSession {
         let workout = Workout.fake(day)
         let session = WorkoutSession(workoutID: workout.id, date: Date())
-        session.completions = workout.exercises.map { ExerciseCompletion(exerciseID: $0.id) }
+        session.completions = workout.exercises
+            .sorted { $0.position < $1.position }
+            .map { ExerciseCompletion(exerciseID: $0.id) }
         
         return session
     }

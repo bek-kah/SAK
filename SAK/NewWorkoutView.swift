@@ -28,7 +28,7 @@ struct NewWorkoutView: View {
                 TextField("Name", text: $name)
                 
                 NavigationLink {
-                    NewExercisesView()
+                    NewExercisesView(exercises: $exercises)
                 } label: {
                     HStack {
                         Text("Exercises")

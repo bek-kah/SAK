@@ -21,18 +21,19 @@ struct WorkoutTileView: View {
             }
             .padding(.bottom)
             
-            ForEach(workoutSession.completions, id:\.id) { exerciseCompletion in
+            ForEach(workout.sortedExercises, id:\.id) { exercise in
                 HStack {
                     Button {
-                        exerciseCompletion.isComplete.toggle()
+                        toggleCompletion(for: exercise.id)
                     } label: {
-                        Image(systemName: exerciseCompletion.isComplete ? "checkmark.circle.fill" : "circle")
+                        let complete = isExerciseComplete(for: exercise.id)
+                        Image(systemName: complete ? "checkmark.circle.fill" : "circle")
                             .resizable()
                             .frame(width: 24, height: 24)
                     }
                     .padding(.trailing, 5)
-                    
-                    Text(fetchExerciseName(exerciseCompletion.exerciseID))
+
+                    Text(exercise.name)
                         .font(.system(size: 16, weight: .regular))
                         .fontWidth(.expanded)
                 }
@@ -88,8 +89,16 @@ struct WorkoutTileView: View {
         .padding()
     }
     
-    func fetchExerciseName(_ exerciseID: UUID) -> String {
-        return workout.exercises.first(where: { $0.id == exerciseID })?.name ?? ""
+    func isExerciseComplete(for exerciseID: UUID) -> Bool {
+        // Find the completion that corresponds to this exercise ID
+        return workoutSession.completions.first(where: { $0.exerciseID == exerciseID })?.isComplete ?? false
+    }
+
+    func toggleCompletion(for exerciseID: UUID) {
+        // Find the index of the completion so we can mutate it in-place
+        if let idx = workoutSession.completions.firstIndex(where: { $0.exerciseID == exerciseID }) {
+            workoutSession.completions[idx].isComplete.toggle()
+        }
     }
     
     func deleteWorkout() {
@@ -101,3 +110,4 @@ struct WorkoutTileView: View {
 #Preview {
     WorkoutTileView(workout: .fake("Sunday"), workoutSession: .fake("Sunday"), deleteSessions: {_ in } )
 }
+
