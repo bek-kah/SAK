@@ -5,23 +5,23 @@ import SwiftData
 class Workout {
     var id: UUID
     var name: String
-    var day: String
+    var weekday: Int
     var exercises: [Exercise]
     var sortedExercises: [Exercise] {
         exercises.sorted(by: { $0.position < $1.position })
     }
     
-    init(name: String, day: String, exercises: [Exercise]) {
+    init(name: String, weekday: Int, exercises: [Exercise]) {
         self.id = UUID()
         self.name = name
-        self.day = day
+        self.weekday = weekday
         self.exercises = exercises
     }
     
-    static func fake(_ day: String) -> Workout {
+    static func fake(_ weekday: Int) -> Workout {
         return Workout(
             name: "Chest Day",
-            day: day,
+            weekday: weekday,
             exercises: [
                 Exercise(name: "Push-ups", position: 0),
                 Exercise(name: "Bench Press", position: 1),
@@ -59,8 +59,8 @@ class WorkoutSession {
         self.date = date
     }
     
-    static func fake(_ day: String) -> WorkoutSession {
-        let workout = Workout.fake(day)
+    static func fake(_ weekday: Int) -> WorkoutSession {
+        let workout = Workout.fake(weekday)
         let session = WorkoutSession(workoutID: workout.id, date: Date())
         session.completions = workout.exercises
             .sorted { $0.position < $1.position }
@@ -82,5 +82,16 @@ class ExerciseCompletion {
         self.id = UUID()
         self.exerciseID = exerciseID
         self.isComplete = false
+    }
+}
+
+var weekdays: [String] {
+    let formatter = DateFormatter()
+    formatter.locale = .current
+    let symbols = formatter.weekdaySymbols
+    if let symbols = symbols, symbols.isEmpty == false {
+        return symbols
+    } else {
+        return ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     }
 }

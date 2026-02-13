@@ -41,9 +41,9 @@ struct DashboardView: View {
     @Query var sessions: [WorkoutSession]
     
     var todaysWorkout: Workout? {
-        let workout = allWorkouts.first{ $0.day == weekdayString(forOffset: selectedDay) }
-        print("Today's workout: \(String(describing: workout?.day ?? "N/A"))")
-        return workout
+        allWorkouts.first(where: { workout in
+            weekdays[workout.weekday] == weekdayString(forOffset: selectedDay)
+        })
     }
     
     @Binding var selectedDay: Int
@@ -123,3 +123,4 @@ extension DashboardView {
         .animation(.easeInOut, value: allWorkouts)
     }
 }
+

@@ -63,8 +63,13 @@ struct WorkoutTileView: View {
                 
                 Spacer()
                 
-                Button("Edit", action: {})
-                    .foregroundStyle(.secondary)
+                NavigationLink {
+                    EditWorkoutView(workout: workout)
+                } label: {
+                    Text("Edit")
+                }
+                .buttonStyle(.bordered)
+                .foregroundStyle(.secondary)
                 
                 NavigationLink {
 //                    WorkoutView(workout: workout, selectedDay: $selectedDay)
@@ -78,7 +83,6 @@ struct WorkoutTileView: View {
                     }
                 }
                 .disabled(workoutSession.completions.allSatisfy(\.isComplete) )
-                .buttonStyle(.bordered)
                 .foregroundStyle(.primary)
             }
             .padding(.top)
@@ -100,14 +104,10 @@ struct WorkoutTileView: View {
             workoutSession.completions[idx].isComplete.toggle()
         }
     }
-    
-    func deleteWorkout() {
-        
-    }
 }
 
 
 #Preview {
-    WorkoutTileView(workout: .fake("Sunday"), workoutSession: .fake("Sunday"), deleteSessions: {_ in } )
+    WorkoutTileView(workout: .fake(0), workoutSession: .fake(0), deleteSessions: {_ in } )
 }
 

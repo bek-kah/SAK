@@ -9,7 +9,7 @@ struct NewExercisesView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section {
+                Section("New Exercise") {
                     HStack {
                         TextField("Name", text: $name)
                         Spacer()
@@ -21,7 +21,7 @@ struct NewExercisesView: View {
                 }
                 
                 if !exercises.isEmpty {
-                    Section("Exercises") {
+                    Section {
                         ForEach(exercises, id: \.id) { exercise in
                             Text(exercise.name)
                         }
@@ -33,7 +33,7 @@ struct NewExercisesView: View {
             }
             .font(.system(size: 16, weight: .regular))
             .fontWidth(.expanded)
-            .navigationTitle("New Exercise")
+            .navigationTitle("Exercises")
             .toolbar {
                 EditButton()
             }
