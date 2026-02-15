@@ -14,6 +14,12 @@ struct EditWorkoutView: View {
     
     @State private var showPicker: Bool = false
     
+    private var noChanges: Bool {
+        workout.name == name &&
+        workout.weekday == weekday &&
+        workout.exercises.count == exercises.count
+    }
+    
     init(workout: Workout) {
         self.workout = workout
         self.name = workout.name
@@ -67,9 +73,15 @@ struct EditWorkoutView: View {
             }
             .font(.system(size: 15, weight: .regular))
             .fontWidth(.expanded)
-            .navigationTitle("New Workout")
+            .navigationTitle("Edit Workout")
             .animation(.easeInOut, value: showPicker)
             .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel", systemImage: "xmark", role: .cancel) {
+                        dismiss()
+                    }
+                }
+                
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save", systemImage: "checkmark", role: .cancel) {
                         workout.name = name
@@ -78,7 +90,7 @@ struct EditWorkoutView: View {
                         updateSessions(workout: workout, workoutID: workout.id)
                         dismiss()
                     }
-                    .disabled(name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                    .disabled(noChanges)
                 }
             }
         }
@@ -97,9 +109,14 @@ struct EditWorkoutView: View {
         workoutID: UUID
     ) {
         guard let sessions = findSessions(workoutID: workoutID) else { return }
-        let updatedExerciseIDs = Set(workout.exercises.map { $0.id })
         
         for session in sessions {
+            
+            // Adjust the weekday of each session to match the updated workout
+            let sessionWeekday = Calendar.current.component(.weekday, from: session.date) - 1
+            let weekdayDifference = workout.weekday - sessionWeekday
+            session.date = Calendar.current.date(byAdding: .day, value: weekdayDifference, to: session.date) ?? session.date
+            
             // Map existing completions by exerciseID
             let completionByID = Dictionary(uniqueKeysWithValues: session.completions.map { ($0.exerciseID, $0) })
             
@@ -111,7 +128,6 @@ struct EditWorkoutView: View {
                     return ExerciseCompletion(exerciseID: exercise.id)
                 }
             }
-            // Any old completions for exercises no longer present are dropped.
         }
     }
 }

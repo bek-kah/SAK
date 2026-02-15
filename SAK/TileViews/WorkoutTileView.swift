@@ -10,6 +10,7 @@ struct WorkoutTileView: View {
     var deleteSessions: (UUID) -> Void
     
     @State private var showingDeleteAlert: Bool = false
+    @State private var showingEditWorkoutView: Bool = false
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -20,6 +21,8 @@ struct WorkoutTileView: View {
                     .foregroundStyle(.primary)
             }
             .padding(.bottom)
+            
+            Text(workoutSession.id.uuidString)
             
             ForEach(workout.sortedExercises, id:\.id) { exercise in
                 HStack {
@@ -63,13 +66,15 @@ struct WorkoutTileView: View {
                 
                 Spacer()
                 
-                NavigationLink {
-                    EditWorkoutView(workout: workout)
+                Button {
+                    showingEditWorkoutView = true
                 } label: {
                     Text("Edit")
                 }
-                .buttonStyle(.bordered)
                 .foregroundStyle(.secondary)
+                .sheet(isPresented: $showingEditWorkoutView) {
+                    EditWorkoutView(workout: workout)
+                }
                 
                 NavigationLink {
 //                    WorkoutView(workout: workout, selectedDay: $selectedDay)
@@ -83,6 +88,7 @@ struct WorkoutTileView: View {
                     }
                 }
                 .disabled(workoutSession.completions.allSatisfy(\.isComplete) )
+                .buttonStyle(.bordered)
                 .foregroundStyle(.primary)
             }
             .padding(.top)
@@ -110,4 +116,3 @@ struct WorkoutTileView: View {
 #Preview {
     WorkoutTileView(workout: .fake(0), workoutSession: .fake(0), deleteSessions: {_ in } )
 }
-
