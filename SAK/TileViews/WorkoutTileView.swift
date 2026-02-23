@@ -11,6 +11,7 @@ struct WorkoutTileView: View {
     
     @State private var showingDeleteAlert: Bool = false
     @State private var showingEditWorkoutView: Bool = false
+    @State private var showingWorkoutInfo: Bool = false
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -19,10 +20,19 @@ struct WorkoutTileView: View {
                     .font(.system(size: 20, weight: .bold))
                     .fontWidth(.expanded)
                     .foregroundStyle(.primary)
+                
+                Spacer()
+                
+                Button("", systemImage: "info.circle.fill") {
+                    showingWorkoutInfo = true
+                }
+                .foregroundStyle(.primary)
+                .popover(isPresented: $showingWorkoutInfo) {
+                    Text(workoutSession.id.uuidString)
+                        .presentationCompactAdaptation(.popover)
+                }
             }
             .padding(.bottom)
-            
-            Text(workoutSession.id.uuidString)
             
             ForEach(workout.sortedExercises, id:\.id) { exercise in
                 HStack {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		470BAFEB2F4BD83000A40E82 /* NewWeightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470BAFEA2F4BD83000A40E82 /* NewWeightView.swift */; };
 		470CB6462EB8164700B9B4DD /* ActivityTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CB6452EB8164700B9B4DD /* ActivityTileView.swift */; };
 		470CB6482EB8166100B9B4DD /* WeightTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470CB6472EB8166100B9B4DD /* WeightTileView.swift */; };
 		472A82E52F3049E10067B762 /* DashboardView:WorkoutSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 472A82E42F3049E10067B762 /* DashboardView:WorkoutSession.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		470BAFEA2F4BD83000A40E82 /* NewWeightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWeightView.swift; sourceTree = "<group>"; };
 		470CB6452EB8164700B9B4DD /* ActivityTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTileView.swift; sourceTree = "<group>"; };
 		470CB6472EB8166100B9B4DD /* WeightTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightTileView.swift; sourceTree = "<group>"; };
 		472A18592E909DE10089F546 /* SAK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAK.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,6 +110,7 @@
 				472A82E62F304AB30067B762 /* DashboardView:DataFetching.swift */,
 				472A82E42F3049E10067B762 /* DashboardView:WorkoutSession.swift */,
 				47A8CA7A2E9EACE2001B0451 /* DaysScrollView.swift */,
+				470BAFEA2F4BD83000A40E82 /* NewWeightView.swift */,
 				47CC49EA2F16E661006CFE6D /* NewWorkoutView.swift */,
 				473015442F3F9BA50067A5CE /* EditWorkoutView.swift */,
 				472A82E82F304C3B0067B762 /* NewExercisesView.swift */,
@@ -202,6 +205,7 @@
 				472A82E72F304AB30067B762 /* DashboardView:DataFetching.swift in Sources */,
 				470CB6482EB8166100B9B4DD /* WeightTileView.swift in Sources */,
 				479B6E822EA95DA00002693E /* DashboardView.swift in Sources */,
+				470BAFEB2F4BD83000A40E82 /* NewWeightView.swift in Sources */,
 				47CC49E92F16E508006CFE6D /* Workout.swift in Sources */,
 				470CB6462EB8164700B9B4DD /* ActivityTileView.swift in Sources */,
 				47A8CA7B2E9EACE2001B0451 /* DaysScrollView.swift in Sources */,
@@ -346,7 +350,10 @@
 				DEVELOPMENT_TEAM = 6BB26UGW9Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SAK/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "The app needs the user's health information to display it to them.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "The app needs access to the user's health information to update them.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -380,7 +387,10 @@
 				DEVELOPMENT_TEAM = 6BB26UGW9Q;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SAK/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "The app needs the user's health information to display it to them.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "The app needs access to the user's health information to update them.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -7,6 +7,7 @@ struct ContentView: View {
     @State private var selectedDay: Int = 52 * 7 + Calendar.current.component(.weekday, from: Date()) - 1
     
     @State private var showNewWorkoutView: Bool = false
+    @State private var showNewWeightView: Bool = false
     
     var selectedDateText: String {
         let selectedDate = getSelectedDate(selectedDay)
@@ -22,6 +23,10 @@ struct ContentView: View {
                 .sheet(isPresented: $showNewWorkoutView) {
                     NewWorkoutView()
                 }
+                .sheet(isPresented: $showNewWeightView) {
+                    NewWeightView()
+                }
+            
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
@@ -37,11 +42,16 @@ struct ContentView: View {
                     ToolbarSpacer(placement: .topBarTrailing)
                     
                     ToolbarItem(placement: .topBarTrailing) {
-                        Button {
-                            showNewWorkoutView = true
-                        } label: {
-                            Image(systemName: "plus")
-                                .font(.system(size: 15, weight: .medium))
+                        Menu("", systemImage: "plus") {
+                            Button("Workout", systemImage: "plus") {
+                                showNewWorkoutView = true
+                            }
+                            Button("Weight", systemImage: "plus") {
+                                showNewWeightView = true
+                            }
+                            Button("Activity", systemImage: "plus") {
+                                showNewWorkoutView = true
+                            }
                         }
                     }
                 }
