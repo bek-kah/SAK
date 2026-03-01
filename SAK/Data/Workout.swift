@@ -6,6 +6,7 @@ class Workout {
     var id: UUID
     var name: String
     var weekday: Int
+    var dateCreated: Date
     var exercises: [Exercise]
     var sortedExercises: [Exercise] {
         exercises.sorted(by: { $0.position < $1.position })
@@ -15,6 +16,7 @@ class Workout {
         self.id = UUID()
         self.name = name
         self.weekday = weekday
+        self.dateCreated = Date()
         self.exercises = exercises
     }
     
@@ -31,7 +33,7 @@ class Workout {
 }
 
 @Model
-class Exercise {
+class Exercise: Equatable {
     var id: UUID
     var name: String
     var position: Int
@@ -40,6 +42,10 @@ class Exercise {
         self.id = UUID()
         self.name = name
         self.position = position
+    }
+    
+    static func == (lhs: Exercise, rhs: Exercise) -> Bool {
+        return lhs.position == rhs.position && lhs.name == rhs.name
     }
 }
 
@@ -93,5 +99,29 @@ var weekdays: [String] {
         return symbols
     } else {
         return ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    }
+}
+
+
+extension [Exercise] {
+    func copy() -> Any {
+        return self.map { Exercise(name: $0.name, position: $0.position) }
+    }
+    
+    
+    static func == (lhs: [Exercise], rhs: [Exercise]) -> Bool {
+        if (lhs.count != rhs.count) {
+            return false
+        }
+        
+        let n = lhs.count
+        
+        for i in 0..<n {
+            if lhs[i] != rhs[i] {
+                return false;
+            }
+        }
+        return true;
+        
     }
 }

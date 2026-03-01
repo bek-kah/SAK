@@ -16,6 +16,11 @@ extension DashboardView {
         ) {
             todaysWorkoutSession = existing
         } else {
+            // Workout sessions aren't generated for dates in the past.
+            if date < todaysWorkout.dateCreated {
+                todaysWorkoutSession = nil
+                return
+            }
             let newSession = createSession(
                 workoutID: todaysWorkout.id,
                 date: date

@@ -27,7 +27,7 @@ func getSelectedDate(_ index: Int) -> Date {
     guard weeks.indices.contains(index / 7) else { return Date() }
     guard weeks[index / 7].indices.contains(index % 7) else { return Date() }
     
-    print("showing \(weeks[index / 7][index % 7].formatted())")
+//    print("showing \(weeks[index / 7][index % 7].formatted())")
     return weeks[index / 7][index % 7]
 }
 

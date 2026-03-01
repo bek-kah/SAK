@@ -43,14 +43,11 @@ struct ContentView: View {
                     
                     ToolbarItem(placement: .topBarTrailing) {
                         Menu("", systemImage: "plus") {
-                            Button("Workout", systemImage: "plus") {
+                            Button("Add Workout", systemImage: "figure.strengthtraining.traditional") {
                                 showNewWorkoutView = true
                             }
-                            Button("Weight", systemImage: "plus") {
+                            Button("Record Weight", systemImage: "figure") {
                                 showNewWeightView = true
-                            }
-                            Button("Activity", systemImage: "plus") {
-                                showNewWorkoutView = true
                             }
                         }
                     }

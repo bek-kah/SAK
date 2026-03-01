@@ -10,21 +10,21 @@ struct EditWorkoutView: View {
     
     @State private var name: String
     @State private var weekday: Int
-    @State private var exercises: [Exercise]
+    @State private var sortedExercises: [Exercise]
     
     @State private var showPicker: Bool = false
     
     private var noChanges: Bool {
         workout.name == name &&
         workout.weekday == weekday &&
-        workout.exercises.count == exercises.count
+        workout.sortedExercises == sortedExercises
     }
     
     init(workout: Workout) {
         self.workout = workout
         self.name = workout.name
         self.weekday = workout.weekday
-        self.exercises = workout.exercises
+        self.sortedExercises = workout.sortedExercises.copy() as! [Exercise]
     }
     
     var body: some View {
@@ -33,12 +33,12 @@ struct EditWorkoutView: View {
                 TextField("Name", text: $name)
                 
                 NavigationLink {
-                    NewExercisesView(exercises: $exercises)
+                    EditExercisesView(sortedExercises: $sortedExercises)
                 } label: {
                     HStack {
                         Text("Exercises")
                         Spacer()
-                        Text("\(exercises.count)")
+                        Text("\(sortedExercises.count)")
                             .foregroundStyle(.secondary)
                     }
                 }
@@ -86,7 +86,7 @@ struct EditWorkoutView: View {
                     Button("Save", systemImage: "checkmark", role: .cancel) {
                         workout.name = name
                         workout.weekday = weekday
-                        workout.exercises = exercises
+                        workout.exercises = sortedExercises
                         updateSessions(workout: workout, workoutID: workout.id)
                         dismiss()
                     }
