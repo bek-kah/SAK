@@ -31,9 +31,16 @@ func getSelectedDate(_ index: Int) -> Date {
     return weeks[index / 7][index % 7]
 }
 
+func getWeekdayIndex(_ index: Int) -> Int {
+    let date = getSelectedDate(index)
+    
+    let calendar = Calendar.current
+    return calendar.component(.weekday, from: date) - 1
+}
+
 struct DaysScrollView: View {
     @State private var currentWeek: [Date]? = []
-    @State private var currentWeekIndex: Int?
+    @State private var currentWeekIndex: Int? = 52
     private let daySymbols = Calendar.current.shortWeekdaySymbols
     
     var weekDays = ["S", "M", "T", "W", "T", "F", "S"]
@@ -97,10 +104,10 @@ struct DaysScrollView: View {
         }
         .padding(.top)
         .padding(.horizontal)
-        .onAppear {
-            if currentWeekIndex == nil {
-                currentWeekIndex = 52
-            }
+        .onChange(of: currentWeekIndex ?? -1) { oldValue, newValue in
+            let difference = newValue - oldValue
+            selectedDay = selectedDay + difference * 7
+
         }
     }
     

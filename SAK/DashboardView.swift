@@ -21,13 +21,16 @@ struct DashboardView: View {
     @Binding var selectedDay: Int
 
     let healthStore: HealthStore
+    let refresh: Bool
 
     init(
         healthStore: HealthStore,
-        selectedDay: Binding<Int>
+        selectedDay: Binding<Int>,
+        refresh: Bool
     ) {
         self.healthStore = healthStore
         self._selectedDay = selectedDay
+        self.refresh = refresh
     }
 
     var body: some View {
@@ -43,6 +46,9 @@ struct DashboardView: View {
         }
         .onChange(of: allWorkouts) {
             loadWorkoutSession()
+        }
+        .onChange(of: refresh) {
+            fetchWeight()
         }
         .onAppear(perform: initialFetch)
         .animation(.default, value: selectedDay)

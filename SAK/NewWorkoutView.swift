@@ -6,8 +6,12 @@ struct NewWorkoutView: View {
     @Environment(\.dismiss) var dismiss
     
     @State private var name: String = ""
-    @State private var weekday: Int = 0
+    @State private var weekday: Int
     @State private var exercises: [Exercise] = []
+    
+    init(selectedDay: Int) {
+        weekday = getWeekdayIndex(selectedDay)
+    }
     
     @State private var showPicker: Bool = false
     
@@ -86,5 +90,5 @@ struct NewWorkoutView: View {
 
 
 #Preview {
-    NewWorkoutView()
+    NewWorkoutView(selectedDay: 0)
 }

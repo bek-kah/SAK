@@ -7,6 +7,8 @@ struct NewWeightView: View {
     @State private var pounds: Double?
     @State private var date: Date = .now
     
+    private var refreshWeight: () -> Void
+    
     var healthStore = HKHealthStore()
     
     let weightType: Set = [
@@ -15,6 +17,10 @@ struct NewWeightView: View {
     
     @State var accessRequested = false
     @State var trigger = false
+    
+    init(refreshWeight: @escaping () -> Void) {
+        self.refreshWeight = refreshWeight
+    }
     
     var body: some View {
         NavigationStack {
@@ -25,11 +31,12 @@ struct NewWeightView: View {
                     Text("Weight")
                     Spacer()
                     TextField("lbs", value: $pounds, format: .number)
+                        .keyboardType(.decimalPad)
                         .foregroundStyle(.primary)
                         .multilineTextAlignment(.trailing)
                 }
             }
-            .navigationTitle("New Weight")
+            .navigationTitle("Record Weight")
             .font(.system(size: 15, weight: .regular))
             .fontWidth(.expanded)
             .foregroundStyle(.secondary)
@@ -84,6 +91,7 @@ struct NewWeightView: View {
             healthStore.save(sample) { success, error in
                 if success {
                     print("Successfully saved weight.")
+                    refreshWeight()
                 } else {
                     print("Error saving weight: \(String(describing: error))")
                 }
@@ -94,5 +102,5 @@ struct NewWeightView: View {
 }
 
 #Preview {
-    NewWeightView()
+    NewWeightView(refreshWeight: {})
 }

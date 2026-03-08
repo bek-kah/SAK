@@ -9,6 +9,8 @@ struct ContentView: View {
     @State private var showNewWorkoutView: Bool = false
     @State private var showNewWeightView: Bool = false
     
+    @State private var refresh = false
+    
     var selectedDateText: String {
         let selectedDate = getSelectedDate(selectedDay)
         let formatter = DateFormatter()
@@ -18,13 +20,19 @@ struct ContentView: View {
 
     var body: some View {
         NavigationStack {
-            DashboardView(healthStore: healthStore, selectedDay: $selectedDay)
+            DashboardView(
+                healthStore: healthStore,
+                selectedDay: $selectedDay,
+                refresh: refresh
+            )
                 .navigationTitle("Fit-tick")
                 .sheet(isPresented: $showNewWorkoutView) {
-                    NewWorkoutView()
+                    NewWorkoutView(selectedDay: selectedDay)
                 }
                 .sheet(isPresented: $showNewWeightView) {
-                    NewWeightView()
+                    NewWeightView {
+                        refresh.toggle()
+                    }
                 }
             
                 .toolbar {
