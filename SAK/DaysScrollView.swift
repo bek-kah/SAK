@@ -101,13 +101,18 @@ struct DaysScrollView: View {
             .scrollTargetBehavior(.paging)
             .scrollPosition(id: $currentWeekIndex)
             .scrollIndicators(.hidden)
+            .onScrollPhaseChange { oldPhase, newPhase in
+                if newPhase == .idle {
+                    let newWeekIndex = currentWeekIndex ?? 52
+                    let difference = newWeekIndex - (selectedDay / 7)
+                    selectedDay = selectedDay + difference * 7
+                }
+            }
         }
         .padding(.top)
         .padding(.horizontal)
-        .onChange(of: currentWeekIndex ?? -1) { oldValue, newValue in
-            let difference = newValue - oldValue
-            selectedDay = selectedDay + difference * 7
-
+        .onChange(of: selectedDay) {
+            currentWeekIndex = selectedDay / 7
         }
     }
     

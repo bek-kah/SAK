@@ -17,7 +17,7 @@ struct ContentView: View {
         formatter.dateFormat = "MM/dd/yy"
         return formatter.string(from: selectedDate)
     }
-
+    
     var body: some View {
         NavigationStack {
             DashboardView(
@@ -25,41 +25,42 @@ struct ContentView: View {
                 selectedDay: $selectedDay,
                 refresh: refresh
             )
-                .navigationTitle("Fit-tick")
-                .sheet(isPresented: $showNewWorkoutView) {
-                    NewWorkoutView(selectedDay: selectedDay)
+            .navigationTitle("Fit-tick")
+            .sheet(isPresented: $showNewWorkoutView) {
+                NewWorkoutView(selectedDay: selectedDay)
+            }
+            .sheet(isPresented: $showNewWeightView) {
+                NewWeightView {
+                    refresh.toggle()
                 }
-                .sheet(isPresented: $showNewWeightView) {
-                    NewWeightView {
-                        refresh.toggle()
-                    }
-                }
+            }
             
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button {
-                            
-                        } label: {
-                            Text(selectedDateText)
-                                .font(.system(size: 15, weight: .medium))
-                                .fontWidth(.expanded)
-                                .foregroundStyle(.primary)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Menu(selectedDateText) {
+                        Button("Today", systemImage: "location.fill") {
+                            selectedDay = 52 * 7 + Calendar.current.component(.weekday, from: Date()) - 1
                         }
+                        Button("Select Date", systemImage: "calendar") {}
                     }
-                    
-                    ToolbarSpacer(placement: .topBarTrailing)
-                    
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Menu("", systemImage: "plus") {
-                            Button("Add Workout", systemImage: "figure.strengthtraining.traditional") {
-                                showNewWorkoutView = true
-                            }
-                            Button("Record Weight", systemImage: "figure") {
-                                showNewWeightView = true
-                            }
+                    .font(.system(size: 15, weight: .medium))
+                    .fontWidth(.expanded)
+                    .foregroundStyle(.primary)
+                }
+                
+                ToolbarSpacer(placement: .topBarTrailing)
+                
+                ToolbarItem(placement: .topBarTrailing) {
+                    Menu("", systemImage: "plus") {
+                        Button("Add Workout", systemImage: "figure.strengthtraining.traditional") {
+                            showNewWorkoutView = true
+                        }
+                        Button("Record Weight", systemImage: "figure") {
+                            showNewWeightView = true
                         }
                     }
                 }
+            }
         }
         .onAppear(perform: requestHealthKitAccess)
     }

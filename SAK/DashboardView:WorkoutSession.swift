@@ -68,6 +68,7 @@ extension DashboardView {
     func deleteSessions(
         workoutID: UUID
     ) {
+        todaysWorkoutSession = nil
         if let sessions = findSessions(workoutID: workoutID) {
             for session in sessions {
                 modelContext.delete(session)
