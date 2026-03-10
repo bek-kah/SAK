@@ -5,6 +5,7 @@ struct ContentView: View {
     // Dependencies
     private let healthStore = HealthStore()
     @State private var selectedDay: Int = 52 * 7 + Calendar.current.component(.weekday, from: Date()) - 1
+    @State private var currentWeekIndex: Int? = 52
     
     @State private var showNewWorkoutView: Bool = false
     @State private var showNewWeightView: Bool = false
@@ -23,7 +24,8 @@ struct ContentView: View {
             DashboardView(
                 healthStore: healthStore,
                 selectedDay: $selectedDay,
-                refresh: refresh
+                currentWeekIndex: $currentWeekIndex,
+                refresh: refresh,
             )
             .navigationTitle("Fit-tick")
             .sheet(isPresented: $showNewWorkoutView) {
@@ -40,6 +42,7 @@ struct ContentView: View {
                     Menu(selectedDateText) {
                         Button("Today", systemImage: "location.fill") {
                             selectedDay = 52 * 7 + Calendar.current.component(.weekday, from: Date()) - 1
+                            currentWeekIndex = 52
                         }
                         Button("Select Date", systemImage: "calendar") {}
                     }

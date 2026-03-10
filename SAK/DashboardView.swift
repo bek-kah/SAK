@@ -19,6 +19,7 @@ struct DashboardView: View {
     }
     
     @Binding var selectedDay: Int
+    @Binding var currentWeekIndex: Int?
 
     let healthStore: HealthStore
     let refresh: Bool
@@ -26,17 +27,22 @@ struct DashboardView: View {
     init(
         healthStore: HealthStore,
         selectedDay: Binding<Int>,
+        currentWeekIndex: Binding <Int?>,
         refresh: Bool
     ) {
         self.healthStore = healthStore
         self._selectedDay = selectedDay
+        self._currentWeekIndex = currentWeekIndex
         self.refresh = refresh
     }
 
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack {
-                DaysScrollView(selectedDay: $selectedDay)
+                DaysScrollView(
+                    selectedDay: $selectedDay,
+                    currentWeekIndex: $currentWeekIndex
+                )
                 dashboardGrid
                 .padding(.horizontal)
             }

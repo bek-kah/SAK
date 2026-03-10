@@ -40,7 +40,7 @@ func getWeekdayIndex(_ index: Int) -> Int {
 
 struct DaysScrollView: View {
     @State private var currentWeek: [Date]? = []
-    @State private var currentWeekIndex: Int? = 52
+    @Binding private var currentWeekIndex: Int?
     private let daySymbols = Calendar.current.shortWeekdaySymbols
     
     var weekDays = ["S", "M", "T", "W", "T", "F", "S"]
@@ -50,8 +50,12 @@ struct DaysScrollView: View {
     }
     @Binding private var selectedDay: Int
     
-    init(selectedDay: Binding<Int>) {
+    init(
+        selectedDay: Binding<Int>,
+        currentWeekIndex: Binding<Int?>
+    ) {
         self._selectedDay = selectedDay
+        self._currentWeekIndex = currentWeekIndex
     }
     
     var body: some View {
@@ -98,21 +102,16 @@ struct DaysScrollView: View {
                 }
             }
             .scrollTargetLayout()
+            .scrollIndicators(.hidden)
             .scrollTargetBehavior(.paging)
             .scrollPosition(id: $currentWeekIndex)
-            .scrollIndicators(.hidden)
-            .onScrollPhaseChange { oldPhase, newPhase in
-                if newPhase == .idle {
-                    let newWeekIndex = currentWeekIndex ?? 52
-                    let difference = newWeekIndex - (selectedDay / 7)
-                    selectedDay = selectedDay + difference * 7
-                }
-            }
         }
         .padding(.top)
         .padding(.horizontal)
-        .onChange(of: selectedDay) {
-            currentWeekIndex = selectedDay / 7
+        .onChange(of: currentWeekIndex) {
+            let newWeekIndex = currentWeekIndex ?? 52
+            let difference = newWeekIndex - (selectedDay / 7)
+            selectedDay = selectedDay + difference * 7
         }
     }
     
@@ -138,7 +137,10 @@ struct DaysScrollView: View {
 }
 
 #Preview {
-    DaysScrollView(selectedDay: .constant(52 * 7 + Calendar.current.component(.weekday, from: Date()) - 1))
+    DaysScrollView(
+        selectedDay: .constant(52 * 7 + Calendar.current.component(.weekday, from: Date()) - 1),
+        currentWeekIndex: .constant(52)
+    )
 }
 
 
