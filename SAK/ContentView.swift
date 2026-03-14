@@ -27,7 +27,7 @@ struct ContentView: View {
                 currentWeekIndex: $currentWeekIndex,
                 refresh: refresh,
             )
-            .navigationTitle("Fit-tick")
+            .navigationTitle("fit-tick")
             .sheet(isPresented: $showNewWorkoutView) {
                 NewWorkoutView(selectedDay: selectedDay)
             }
@@ -55,7 +55,7 @@ struct ContentView: View {
                 
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu("", systemImage: "plus") {
-                        Button("Add Workout", systemImage: "figure.strengthtraining.traditional") {
+                        Button("New Workout", systemImage: "figure.strengthtraining.traditional") {
                             showNewWorkoutView = true
                         }
                         Button("Record Weight", systemImage: "figure") {

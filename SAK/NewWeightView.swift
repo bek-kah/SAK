@@ -3,6 +3,7 @@ import SwiftUI
 
 struct NewWeightView: View {
     @Environment(\.dismiss) var dismiss
+    @FocusState var focusedField: Bool
     
     @State private var pounds: Double?
     @State private var date: Date = .now
@@ -15,7 +16,10 @@ struct NewWeightView: View {
         HKQuantityType.quantityType(forIdentifier: .bodyMass)!
     ]
     
-    @State var accessRequested = false
+    // Indicates whether or not write of weight to HealthKit is granted
+    @State var accessGranted = false
+    
+    // When toggled, it triggers healthDataAccessRequest to give write access to weight.
     @State var trigger = false
     
     init(refreshWeight: @escaping () -> Void) {
@@ -34,6 +38,7 @@ struct NewWeightView: View {
                         .keyboardType(.decimalPad)
                         .foregroundStyle(.primary)
                         .multilineTextAlignment(.trailing)
+                        .focused($focusedField)
                 }
             }
             .navigationTitle("Record Weight")
@@ -52,28 +57,28 @@ struct NewWeightView: View {
                         addWeight()
                         dismiss()
                     }
-                    .disabled(pounds == nil || !accessRequested)
+                    .disabled(pounds == nil || !accessGranted)
                 }
             }
             .onAppear() {
                 if HKHealthStore.isHealthDataAvailable() {
                     trigger.toggle()
                 }
+                focusedField = true
             }
-            
-            .healthDataAccessRequest(store: healthStore,
-                                             shareTypes: weightType,
-                                             readTypes: weightType,
-                                             trigger: trigger) { result in
-                        switch result {
-                            
-                        case .success(_):
-                            accessRequested = true
-                        case .failure(let error):
-                            // Handle the error here.
-                            fatalError("*** An error occurred while requesting authentication: \(error) ***")
-                        }
+            .healthDataAccessRequest(
+                store: healthStore,
+                shareTypes: weightType,
+                readTypes: weightType,
+                trigger: trigger) { result in
+                    switch result {
+                    case .success(_):
+                        accessGranted = true
+                    case .failure(let error):
+                        // Handle the error here.
+                        fatalError("*** An error occurred while requesting authentication: \(error) ***")
                     }
+                }
         }
     }
     

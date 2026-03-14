@@ -13,6 +13,11 @@ struct WorkoutTileView: View {
     @State private var showingEditWorkoutView: Bool = false
     @State private var showingWorkoutInfo: Bool = false
     
+    private var completeExercisesCountText: Text {
+        let count = workout.exercises.filter { isExerciseComplete(for: $0.id) }.count
+            return Text("\(count)/\(workout.exercises.count)")
+    }
+    
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -23,9 +28,15 @@ struct WorkoutTileView: View {
                 
                 Spacer()
                 
-                Button("", systemImage: "info.circle.fill") {
+                Button {
                     showingWorkoutInfo = true
+                } label: {
+                    completeExercisesCountText
                 }
+                .buttonStyle(.bordered)
+                .font(.system(size: 16, weight: .regular))
+                .fontWidth(.expanded)
+                .buttonStyle(.bordered)
                 .foregroundStyle(.primary)
                 .popover(isPresented: $showingWorkoutInfo) {
                     Text(workoutSession.id.uuidString)

@@ -12,6 +12,7 @@ extension DashboardView {
     }
 
     func initialFetch() {
+        print("Fetching initial data...")
         loadWorkoutSession()
         fetchWeight()
         fetchActivitySummary()

@@ -6,6 +6,7 @@ extension DashboardView {
         // If there are no workouts for today, then there are no sessions.
         guard let todaysWorkout else {
             todaysWorkoutSession = nil
+            print("There is no workout for \(getSelectedDate(selectedDay).formatted())")
             return
         }
         let date = getSelectedDate(selectedDay)

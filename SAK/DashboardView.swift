@@ -4,6 +4,7 @@ import SwiftUI
 // MARK: - DashboardView
 struct DashboardView: View {
     @Environment(\.modelContext) var modelContext
+    @Environment(\.scenePhase) var scenePhase
     
     @State var todaysWorkoutSession: WorkoutSession?
     @State var activity: Activity?
@@ -55,6 +56,11 @@ struct DashboardView: View {
         }
         .onChange(of: refresh) {
             fetchWeight()
+        }
+        .onChange(of: scenePhase) {
+            if scenePhase == .active {
+                initialFetch()
+            }
         }
         .onAppear(perform: initialFetch)
         .animation(.default, value: selectedDay)

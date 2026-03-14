@@ -4,6 +4,7 @@ import SwiftUI
 struct NewWorkoutView: View {
     @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
+    @FocusState var focusedField: Bool
     
     @State private var name: String = ""
     @State private var weekday: Int
@@ -19,6 +20,7 @@ struct NewWorkoutView: View {
         NavigationStack {
             List {
                 TextField("Name", text: $name)
+                    .focused($focusedField)
                 
                 NavigationLink {
                     NewExercisesView(exercises: $exercises)
@@ -30,7 +32,6 @@ struct NewWorkoutView: View {
                             .foregroundStyle(.secondary)
                     }
                 }
-                
                 
                 Button {
                     withAnimation {
@@ -82,6 +83,9 @@ struct NewWorkoutView: View {
                     }
                     .disabled(name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 }
+            }
+            .onAppear {
+                focusedField = true
             }
         }
 
