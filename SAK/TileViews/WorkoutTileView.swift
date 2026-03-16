@@ -13,9 +13,26 @@ struct WorkoutTileView: View {
     @State private var showingEditWorkoutView: Bool = false
     @State private var showingWorkoutInfo: Bool = false
     
+    @State private var showingExerciseInfo: [UUID: Bool] = [:]
+    
     private var completeExercisesCountText: Text {
         let count = workout.exercises.filter { isExerciseComplete(for: $0.id) }.count
             return Text("\(count)/\(workout.exercises.count)")
+    }
+    
+//    WorkoutTileView(workout: workout, workoutSession: session, deleteSessions: deleteSessions)
+    
+    init(
+        workout: Workout,
+        workoutSession: WorkoutSession,
+        deleteSessions: @escaping (UUID) -> Void
+    ) {
+        self.workout = workout
+        self.workoutSession = workoutSession
+        self.deleteSessions = deleteSessions
+        for exercise in workout.exercises {
+            showingExerciseInfo[exercise.id] = false
+        }
     }
     
     var body: some View {
@@ -60,6 +77,19 @@ struct WorkoutTileView: View {
                     Text(exercise.name)
                         .font(.system(size: 16, weight: .regular))
                         .fontWidth(.expanded)
+//                    
+//                    Spacer()
+//                    
+//                    Button("", systemImage: "info.circle.fill") {
+//                        showingExerciseInfo[exercise.id] = true
+//                    }
+//                    .popover(isPresented: Binding(
+//                        get: { showingExerciseInfo[exercise.id] ?? false },
+//                        set: { showingExerciseInfo[exercise.id] = $0 }
+//                    )) {
+//                        Text(exercise.id.uuidString)
+//                            .presentationCompactAdaptation(.popover)
+//                    }
                 }
                 .foregroundStyle(.secondary)
                 .padding(.trailing, 5)

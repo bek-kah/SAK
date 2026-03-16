@@ -1,6 +1,12 @@
 import SwiftData
 import SwiftUI
 
+struct ExerciseDraft: Identifiable, Equatable {
+    var id: UUID
+    var name: String
+    var position: Int
+}
+
 struct EditWorkoutView: View {
     @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
@@ -10,21 +16,23 @@ struct EditWorkoutView: View {
     
     @State private var name: String
     @State private var weekday: Int
-    @State private var sortedExercises: [Exercise]
+    @State private var draftExercises: [ExerciseDraft]
     
     @State private var showPicker: Bool = false
     
     private var noChanges: Bool {
         workout.name == name &&
         workout.weekday == weekday &&
-        workout.sortedExercises == sortedExercises
+        workout.sortedExercises.map { ExerciseDraft(id: $0.id, name: $0.name, position: $0.position) } == draftExercises
     }
     
     init(workout: Workout) {
         self.workout = workout
         self.name = workout.name
         self.weekday = workout.weekday
-        self.sortedExercises = workout.sortedExercises.copy() as! [Exercise]
+        self.draftExercises = workout.sortedExercises.map {
+            ExerciseDraft(id: $0.id, name: $0.name, position: $0.position)
+        }
     }
     
     var body: some View {
@@ -33,12 +41,12 @@ struct EditWorkoutView: View {
                 TextField("Name", text: $name)
                 
                 NavigationLink {
-                    EditExercisesView(sortedExercises: $sortedExercises)
+                    EditExercisesView(sortedExercises: $draftExercises)
                 } label: {
                     HStack {
                         Text("Exercises")
                         Spacer()
-                        Text("\(sortedExercises.count)")
+                        Text("\(draftExercises.count)")
                             .foregroundStyle(.secondary)
                     }
                 }
@@ -83,10 +91,29 @@ struct EditWorkoutView: View {
                 }
                 
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save", systemImage: "checkmark", role: .cancel) {
+                    Button("Save", systemImage: "checkmark", role: .confirm) {
                         workout.name = name
                         workout.weekday = weekday
-                        workout.exercises = sortedExercises
+                        
+                        let existingExercisesByID = Dictionary(uniqueKeysWithValues: workout.exercises.map { ($0.id, $0) } )
+                        
+                        workout.exercises = draftExercises.map { draftExercise in
+                            if let existing = existingExercisesByID[draftExercise.id] {
+                                existing.name = draftExercise.name
+                                existing.position = draftExercise.position
+                                return existing
+                            } else {
+                                let newExercise = Exercise(name: draftExercise.name, position: draftExercise.position)
+                                modelContext.insert(newExercise)
+                                return newExercise
+                            }
+                        }
+                        
+                        let draftIDs = Set(draftExercises.map( { $0.id } ))
+                        for exercise in existingExercisesByID.values where !draftIDs.contains(exercise.id) {
+                            modelContext.delete(exercise)
+                        }
+                        
                         updateSessions(workout: workout, workoutID: workout.id)
                         dismiss()
                     }
