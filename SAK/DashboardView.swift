@@ -110,7 +110,7 @@ extension DashboardView {
                 }
             }
         }
-        .animation(.easeInOut, value: todaysWorkoutSession)
+//        .animation(.default, value: todaysWorkoutSession)
     }
 }
 

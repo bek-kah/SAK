@@ -10,15 +10,18 @@ struct ExerciseDraft: Identifiable, Equatable {
 struct EditWorkoutView: View {
     @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
-    @Query var sessions: [WorkoutSession]
     
+    @Query var sessions: [WorkoutSession]
     var workout: Workout
+    
+    var deleteSessions: (UUID) -> Void
     
     @State private var name: String
     @State private var weekday: Int
     @State private var draftExercises: [ExerciseDraft]
     
     @State private var showPicker: Bool = false
+    @State private var showingDeleteAlert: Bool = false
     
     private var noChanges: Bool {
         workout.name == name &&
@@ -26,13 +29,14 @@ struct EditWorkoutView: View {
         workout.sortedExercises.map { ExerciseDraft(id: $0.id, name: $0.name, position: $0.position) } == draftExercises
     }
     
-    init(workout: Workout) {
+    init(workout: Workout, deleteSessions: @escaping (UUID) -> Void) {
         self.workout = workout
         self.name = workout.name
         self.weekday = workout.weekday
         self.draftExercises = workout.sortedExercises.map {
             ExerciseDraft(id: $0.id, name: $0.name, position: $0.position)
         }
+        self.deleteSessions = deleteSessions
     }
     
     var body: some View {
@@ -92,35 +96,62 @@ struct EditWorkoutView: View {
                 
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save", systemImage: "checkmark", role: .confirm) {
-                        workout.name = name
-                        workout.weekday = weekday
-                        
-                        let existingExercisesByID = Dictionary(uniqueKeysWithValues: workout.exercises.map { ($0.id, $0) } )
-                        
-                        workout.exercises = draftExercises.map { draftExercise in
-                            if let existing = existingExercisesByID[draftExercise.id] {
-                                existing.name = draftExercise.name
-                                existing.position = draftExercise.position
-                                return existing
-                            } else {
-                                let newExercise = Exercise(name: draftExercise.name, position: draftExercise.position)
-                                modelContext.insert(newExercise)
-                                return newExercise
-                            }
-                        }
-                        
-                        let draftIDs = Set(draftExercises.map( { $0.id } ))
-                        for exercise in existingExercisesByID.values where !draftIDs.contains(exercise.id) {
-                            modelContext.delete(exercise)
-                        }
-                        
-                        updateSessions(workout: workout, workoutID: workout.id)
+                        saveWorkout()
                         dismiss()
                     }
                     .disabled(noChanges)
                 }
             }
+            .safeAreaInset(edge: .bottom) {
+                Button {
+                    showingDeleteAlert = true
+                } label: {
+                    Text("Delete Workout")
+                        .padding(.horizontal)
+                        .padding(.vertical,3)
+                }
+                .confirmationDialog(
+                    Text("Are you sure you want to delete this workout? All of its sessions will be deleted as well."),
+                    isPresented: $showingDeleteAlert,
+                    titleVisibility: .visible
+                ) {
+                    Button("Delete Workout", role: .destructive) {
+                        deleteSessions(workout.id)
+                        modelContext.delete(workout)
+                        dismiss()
+                    }
+                }
+//                .fontWidth(.standard)
+                .foregroundStyle(.red)
+                .buttonStyle(.bordered)
+            }
         }
+    }
+    
+    func saveWorkout() {
+        workout.name = name
+        workout.weekday = weekday
+        
+        let existingExercisesByID = Dictionary(uniqueKeysWithValues: workout.exercises.map { ($0.id, $0) } )
+        
+        workout.exercises = draftExercises.map { draftExercise in
+            if let existing = existingExercisesByID[draftExercise.id] {
+                existing.name = draftExercise.name
+                existing.position = draftExercise.position
+                return existing
+            } else {
+                let newExercise = Exercise(name: draftExercise.name, position: draftExercise.position)
+                modelContext.insert(newExercise)
+                return newExercise
+            }
+        }
+        
+        let draftIDs = Set(draftExercises.map( { $0.id } ))
+        for exercise in existingExercisesByID.values where !draftIDs.contains(exercise.id) {
+            modelContext.delete(exercise)
+        }
+        
+        updateSessions(workout: workout, workoutID: workout.id)
     }
     
     func findSessions(
@@ -161,5 +192,9 @@ struct EditWorkoutView: View {
 
 
 #Preview {
-    return EditWorkoutView(workout: .fake(0))
+    EditWorkoutView(workout: .fake(0), deleteSessions: { _ in })
+}
+
+#Preview {
+    WorkoutTileView(workout: .fake(0), workoutSession: .fake(0), deleteSessions: {_ in } )
 }

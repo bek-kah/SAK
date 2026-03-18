@@ -23,6 +23,8 @@
 		47A8CA7B2E9EACE2001B0451 /* DaysScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47A8CA7A2E9EACE2001B0451 /* DaysScrollView.swift */; };
 		47CC49EB2F16E661006CFE6D /* NewWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CC49EA2F16E661006CFE6D /* NewWorkoutView.swift */; };
 		47CC49ED2F19C638006CFE6D /* WorkoutTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CC49EC2F19C638006CFE6D /* WorkoutTileView.swift */; };
+		47DE38BA2F6A394A00EF0536 /* WorkoutTileView-WorkoutOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DE38B92F6A394A00EF0536 /* WorkoutTileView-WorkoutOverlayView.swift */; };
+		47DE38BC2F6A39E200EF0536 /* WorkoutTileView-WorkoutMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DE38BB2F6A39E200EF0536 /* WorkoutTileView-WorkoutMainView.swift */; };
 		47E1584C2F54CF6E00CB5D53 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E158482F54CF6E00CB5D53 /* Activity.swift */; };
 		47E1584D2F54CF6E00CB5D53 /* Weight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E158492F54CF6E00CB5D53 /* Weight.swift */; };
 		47E1584E2F54CF6E00CB5D53 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E1584A2F54CF6E00CB5D53 /* Workout.swift */; };
@@ -50,6 +52,8 @@
 		47A8CA7A2E9EACE2001B0451 /* DaysScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysScrollView.swift; sourceTree = "<group>"; };
 		47CC49EA2F16E661006CFE6D /* NewWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWorkoutView.swift; sourceTree = "<group>"; };
 		47CC49EC2F19C638006CFE6D /* WorkoutTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutTileView.swift; sourceTree = "<group>"; };
+		47DE38B92F6A394A00EF0536 /* WorkoutTileView-WorkoutOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkoutTileView-WorkoutOverlayView.swift"; sourceTree = "<group>"; };
+		47DE38BB2F6A39E200EF0536 /* WorkoutTileView-WorkoutMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WorkoutTileView-WorkoutMainView.swift"; sourceTree = "<group>"; };
 		47E158482F54CF6E00CB5D53 /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		47E158492F54CF6E00CB5D53 /* Weight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weight.swift; sourceTree = "<group>"; };
 		47E1584A2F54CF6E00CB5D53 /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
@@ -74,6 +78,8 @@
 			children = (
 				479B6E832EA95E040002693E /* ShapeTileViews.swift */,
 				47CC49EC2F19C638006CFE6D /* WorkoutTileView.swift */,
+				47DE38BB2F6A39E200EF0536 /* WorkoutTileView-WorkoutMainView.swift */,
+				47DE38B92F6A394A00EF0536 /* WorkoutTileView-WorkoutOverlayView.swift */,
 				470CB6472EB8166100B9B4DD /* WeightTileView.swift */,
 				470CB6452EB8164700B9B4DD /* ActivityTileView.swift */,
 			);
@@ -215,6 +221,7 @@
 				473015452F3F9BA50067A5CE /* EditWorkoutView.swift in Sources */,
 				47E158502F54CFCD00CB5D53 /* EditExercisesView.swift in Sources */,
 				472A82E92F304C3B0067B762 /* NewExercisesView.swift in Sources */,
+				47DE38BC2F6A39E200EF0536 /* WorkoutTileView-WorkoutMainView.swift in Sources */,
 				47CC49ED2F19C638006CFE6D /* WorkoutTileView.swift in Sources */,
 				4752DBD92E9B554200DA6124 /* ContentView.swift in Sources */,
 				47FB3E862EA1DB1400EB97A6 /* StackedActivityRingView.swift in Sources */,
@@ -227,6 +234,7 @@
 				470CB6462EB8164700B9B4DD /* ActivityTileView.swift in Sources */,
 				47A8CA7B2E9EACE2001B0451 /* DaysScrollView.swift in Sources */,
 				4752DBDD2E9B554200DA6124 /* SAKApp.swift in Sources */,
+				47DE38BA2F6A394A00EF0536 /* WorkoutTileView-WorkoutOverlayView.swift in Sources */,
 				47FB3E882EA1DBE300EB97A6 /* ActivityRingView.swift in Sources */,
 				47E1584C2F54CF6E00CB5D53 /* Activity.swift in Sources */,
 				47E1584D2F54CF6E00CB5D53 /* Weight.swift in Sources */,
