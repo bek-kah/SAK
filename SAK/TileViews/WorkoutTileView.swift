@@ -5,6 +5,8 @@ struct WorkoutTileView: View {
     
     @Environment(\.modelContext) var modelContext
     
+    @Binding var selectedDay: Int
+    
     var workout: Workout
     @Bindable var workoutSession: WorkoutSession
     var deleteSessions: (UUID) -> Void
@@ -30,13 +32,13 @@ struct WorkoutTileView: View {
         return workoutSession.completions.contains { $0.isComplete }
     }
     
-    //    WorkoutTileView(workout: workout, workoutSession: session, deleteSessions: deleteSessions)
-    
     init(
+        selectedDay: Binding<Int>,
         workout: Workout,
         workoutSession: WorkoutSession,
         deleteSessions: @escaping (UUID) -> Void
     ) {
+        self._selectedDay = selectedDay
         self.workout = workout
         self.workoutSession = workoutSession
         self.deleteSessions = deleteSessions
@@ -64,5 +66,5 @@ struct WorkoutTileView: View {
 
 
 #Preview {
-    WorkoutTileView(workout: .fake(0), workoutSession: .fake(0), deleteSessions: {_ in } )
+    WorkoutTileView(selectedDay: .constant(constantSelectedDay), workout: .fake(0), workoutSession: .fake(0), deleteSessions: { _ in } )
 }

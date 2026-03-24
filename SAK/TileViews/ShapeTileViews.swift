@@ -33,7 +33,12 @@ struct SquareTileView: View {
                 ActivityTileView(activity: activity)
                 
             case .workout(let workout, let session, let deleteSessions):
-                WorkoutTileView(workout: workout, workoutSession: session, deleteSessions: deleteSessions)
+                WorkoutTileView(
+                    selectedDay: $selectedDay,
+                    workout: workout,
+                    workoutSession: session,
+                    deleteSessions: deleteSessions
+                )
                 
             case .none:
                 Text("")

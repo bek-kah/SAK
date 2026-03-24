@@ -2,10 +2,17 @@ import SwiftData
 import SwiftUI
 
 extension WorkoutTileView {
+    var exercisesWithCompletions: [(exercise: Exercise, completion: ExerciseCompletion)] {
+        workout.sortedExercises.compactMap { exercise in
+            guard let completion = workoutSession.completions.first(where: { $0.exerciseID == exercise.id }) else { return nil }
+            return (exercise, completion)
+        }
+    }
+    
     var workoutMainView: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text(workout.name)
+                Text(workoutSession.name.isEmpty ? workout.name : workoutSession.name)
                     .font(.system(size: 20, weight: .bold))
                     .fontWidth(.expanded)
                     .foregroundStyle(.primary)
@@ -28,13 +35,12 @@ extension WorkoutTileView {
             }
             .padding(.bottom)
             
-            ForEach(workout.sortedExercises, id:\.id) { exercise in
+            ForEach(exercisesWithCompletions, id: \.exercise.id) { exercise, completion in
                 HStack {
                     Button {
                         toggleCompletion(for: exercise.id)
                     } label: {
-                        let complete = isExerciseComplete(for: exercise.id)
-                        Image(systemName: complete ? "checkmark.circle.fill" : "circle")
+                        Image(systemName: completion.isComplete ? "checkmark.circle.fill" : "circle")
                             .resizable()
                             .frame(width: 24, height: 24)
                     }
@@ -43,19 +49,6 @@ extension WorkoutTileView {
                     Text(exercise.name)
                         .font(.system(size: 16, weight: .regular))
                         .fontWidth(.expanded)
-                    //
-                    //                    Spacer()
-                    //
-                    //                    Button("", systemImage: "info.circle.fill") {
-                    //                        showingExerciseInfo[exercise.id] = true
-                    //                    }
-                    //                    .popover(isPresented: Binding(
-                    //                        get: { showingExerciseInfo[exercise.id] ?? false },
-                    //                        set: { showingExerciseInfo[exercise.id] = $0 }
-                    //                    )) {
-                    //                        Text(exercise.id.uuidString)
-                    //                            .presentationCompactAdaptation(.popover)
-                    //                    }
                 }
                 .foregroundStyle(.secondary)
                 .padding(.trailing, 5)
@@ -63,24 +56,6 @@ extension WorkoutTileView {
             }
             
             HStack {
-//                Button {
-//                    showingDeleteAlert = true
-//                } label: {
-//                    Text("Delete")
-//                }
-//                .tint(.red)
-//                .buttonStyle(.bordered)
-//                .confirmationDialog(
-//                    Text("Are you sure?"),
-//                    isPresented: $showingDeleteAlert,
-//                    titleVisibility: .visible
-//                ) {
-//                    Button("Delete", role: .destructive) {
-//                        deleteSessions(workout.id)
-//                        modelContext.delete(workout)
-//                    }
-//                }
-                
                 Button {
                     showingEditWorkoutView = true
                 } label: {
@@ -90,6 +65,7 @@ extension WorkoutTileView {
                 .foregroundStyle(.secondary)
                 .sheet(isPresented: $showingEditWorkoutView) {
                     EditWorkoutView(
+                        selectedDay: $selectedDay,
                         workout: workout,
                         deleteSessions: deleteSessions
                     )
@@ -98,12 +74,11 @@ extension WorkoutTileView {
                 Spacer()
                 
                 NavigationLink {
-                    //                    WorkoutView(workout: workout, selectedDay: $selectedDay)
+                    // WorkoutView(workout: workout, selectedDay: $selectedDay)
                 }
                 label: {
                     if !allExercisesComplete {
                         HStack {
-//                            Text(someExercisesComplete ? "Continue" : "Start")
                             Text("")
                             Image(systemName: "chevron.right")
                         }
@@ -115,13 +90,11 @@ extension WorkoutTileView {
                         }
                     }
                 }
-//                .buttonStyle(.bordered)
                 .foregroundStyle(.secondary)
                 .disabled(allExercisesComplete)
                 
             }
             .padding(.top)
-//            .font(.system(size: 17, weight: .regular)
             .fontWidth(.expanded)
             .animation(.easeInOut, value: allExercisesComplete)
             .animation(.easeInOut, value: someExercisesComplete)
@@ -131,5 +104,5 @@ extension WorkoutTileView {
 }
 
 #Preview {
-    WorkoutTileView(workout: .fake(0), workoutSession: .fake(0), deleteSessions: {_ in } )
+    WorkoutTileView(selectedDay: .constant(constantSelectedDay),workout: .fake(0), workoutSession: .fake(0), deleteSessions: { _ in } )
 }

@@ -53,14 +53,17 @@ class Exercise: Equatable {
 class WorkoutSession {
     var id: UUID
     var workoutID: UUID
+    var name: String = ""
     var date: Date
     var completions: [ExerciseCompletion] = []
     
     init(
         workoutID: UUID,
+        name: String = "",
         date: Date
     ) {
         self.id = UUID()
+        self.name = name
         self.workoutID = workoutID
         self.date = date
     }

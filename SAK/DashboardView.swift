@@ -48,23 +48,30 @@ struct DashboardView: View {
                 .padding(.horizontal)
             }
         }
-        .onChange(of: selectedDay) {
-            initialFetch()
-        }
-        .onChange(of: allWorkouts) {
-            loadWorkoutSession()
-        }
-        .onChange(of: refresh) {
-            fetchWeight()
-        }
+        .onChange(of: selectedDay) { initialFetch() }
+        .onChange(of: allWorkouts) { loadWorkoutSession() }
+        .onChange(of: refresh) { fetchWeight() }
         .onChange(of: scenePhase) {
-            if scenePhase == .active {
-                initialFetch()
-            }
+            if scenePhase == .active { initialFetch() }
         }
         .onAppear(perform: initialFetch)
+        .onAppear {
+            try? backfillSessionNames(context: modelContext)
+        }
         .animation(.default, value: selectedDay)
     }
+}
+
+func backfillSessionNames(context: ModelContext) throws {
+    let sessions = try context.fetch(FetchDescriptor<WorkoutSession>())
+    let workouts = try context.fetch(FetchDescriptor<Workout>())
+    
+    for session in sessions where session.name.isEmpty {
+        if let workout = workouts.first(where: { $0.id == session.workoutID }) {
+            session.name = workout.name
+        }
+    }
+    try context.save()
 }
 
 // MARK: - DashboardView Subviews
@@ -110,7 +117,5 @@ extension DashboardView {
                 }
             }
         }
-//        .animation(.default, value: todaysWorkoutSession)
     }
 }
-

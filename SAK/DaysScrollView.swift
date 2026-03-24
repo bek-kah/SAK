@@ -1,5 +1,7 @@
 import SwiftUI
 
+let constantSelectedDay: Int = 52 * 7 + Calendar.current.component(.weekday, from: Date()) - 1
+
 private var weeks: [[Date]] {
     let calendar = Calendar.current
     let today = Date()

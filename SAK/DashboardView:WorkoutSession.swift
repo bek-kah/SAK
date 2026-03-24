@@ -47,10 +47,18 @@ extension DashboardView {
     }
     
     func findSessions(
-        workoutID: UUID
+        workoutID: UUID,
+        after editDate: Date? = nil
     ) -> [WorkoutSession]? {
-        sessions.filter {
-            $0.workoutID == workoutID
+        if let editDate = editDate {
+            return sessions.filter {
+                $0.workoutID == workoutID &&
+                $0.date >= editDate
+            }
+        } else {
+            return sessions.filter {
+                $0.workoutID == workoutID
+            }
         }
     }
     

@@ -11,6 +11,8 @@ struct EditWorkoutView: View {
     @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
     
+    @Binding var selectedDay: Int
+    
     @Query var sessions: [WorkoutSession]
     var workout: Workout
     
@@ -29,7 +31,12 @@ struct EditWorkoutView: View {
         workout.sortedExercises.map { ExerciseDraft(id: $0.id, name: $0.name, position: $0.position) } == draftExercises
     }
     
-    init(workout: Workout, deleteSessions: @escaping (UUID) -> Void) {
+    init(
+        selectedDay: Binding<Int>,
+        workout: Workout,
+        deleteSessions: @escaping (UUID) -> Void
+    ) {
+        self._selectedDay = selectedDay
         self.workout = workout
         self.name = workout.name
         self.weekday = workout.weekday
@@ -155,10 +162,18 @@ struct EditWorkoutView: View {
     }
     
     func findSessions(
-        workoutID: UUID
+        workoutID: UUID,
+        after editDate: Date? = nil
     ) -> [WorkoutSession]? {
-        sessions.filter {
-            $0.workoutID == workoutID
+        if let editDate = editDate {
+            return sessions.filter {
+                $0.workoutID == workoutID &&
+                $0.date >= editDate
+            }
+        } else {
+            return sessions.filter {
+                $0.workoutID == workoutID
+            }
         }
     }
     
@@ -166,11 +181,12 @@ struct EditWorkoutView: View {
         workout: Workout,
         workoutID: UUID
     ) {
-        guard let sessions = findSessions(workoutID: workoutID) else { return }
+        guard let sessions = findSessions(workoutID: workoutID, after: getSelectedDate(selectedDay)) else { return }
         
         for session in sessions {
             
             // Adjust the weekday of each session to match the updated workout
+            session.name = name
             let sessionWeekday = Calendar.current.component(.weekday, from: session.date) - 1
             let weekdayDifference = workout.weekday - sessionWeekday
             session.date = Calendar.current.date(byAdding: .day, value: weekdayDifference, to: session.date) ?? session.date
@@ -192,9 +208,9 @@ struct EditWorkoutView: View {
 
 
 #Preview {
-    EditWorkoutView(workout: .fake(0), deleteSessions: { _ in })
+    EditWorkoutView(selectedDay: .constant(constantSelectedDay), workout: .fake(0), deleteSessions: { _ in })
 }
 
 #Preview {
-    WorkoutTileView(workout: .fake(0), workoutSession: .fake(0), deleteSessions: {_ in } )
+    WorkoutTileView(selectedDay: .constant(constantSelectedDay), workout: .fake(0), workoutSession: .fake(0), deleteSessions: { _ in } )
 }
