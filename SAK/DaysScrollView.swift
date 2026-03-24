@@ -33,6 +33,18 @@ func getSelectedDate(_ index: Int) -> Date {
     return weeks[index / 7][index % 7]
 }
 
+func getSelectedDay(_ day: Date) -> Int {
+    let calendar = Calendar.current
+    for (weekIndex, week) in weeks.enumerated() {
+        for (dayIndex, date) in week.enumerated() {
+            if calendar.isDate(date, inSameDayAs: day) {
+                return weekIndex * 7 + dayIndex
+            }
+        }
+    }
+    return 52 * 7 + Calendar.current.component(.weekday, from: Date()) - 1 // fallback to today
+}
+
 func getWeekdayIndex(_ index: Int) -> Int {
     let date = getSelectedDate(index)
     

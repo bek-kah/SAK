@@ -7,8 +7,11 @@ struct ContentView: View {
     @State private var selectedDay: Int = 52 * 7 + Calendar.current.component(.weekday, from: Date()) - 1
     @State private var currentWeekIndex: Int? = 52
     
+    @State private var selectedDate = Date()
+    
     @State private var showNewWorkoutView: Bool = false
     @State private var showNewWeightView: Bool = false
+    @State private var showDatePicker: Bool = false
     
     @State private var refresh = false
     
@@ -28,6 +31,14 @@ struct ContentView: View {
                 refresh: refresh,
             )
             .navigationTitle("fit-tick")
+            .sheet(isPresented: $showDatePicker) {
+                DatePicker("Select Date", selection: $selectedDate, in: ...Date(), displayedComponents: .date)
+                    .datePickerStyle(.graphical)
+                    .presentationDetents([.medium])
+                    .padding()
+            }
+            .presentationDetents([.medium])
+            .presentationDragIndicator(.visible)
             .sheet(isPresented: $showNewWorkoutView) {
                 NewWorkoutView(selectedDay: selectedDay)
             }
@@ -44,7 +55,9 @@ struct ContentView: View {
                             selectedDay = 52 * 7 + Calendar.current.component(.weekday, from: Date()) - 1
                             currentWeekIndex = 52
                         }
-                        Button("Select Date", systemImage: "calendar") {}
+                        Button("Select Date", systemImage: "calendar") {
+                            showDatePicker = true
+                        }
                     }
                     .font(.system(size: 15, weight: .medium))
                     .fontWidth(.expanded)
@@ -66,6 +79,12 @@ struct ContentView: View {
             }
         }
         .onAppear(perform: requestHealthKitAccess)
+        .onChange(of: selectedDate) { _, newDate in
+            withAnimation {
+                selectedDay = getSelectedDay(newDate)
+                currentWeekIndex = selectedDay / 7
+            }
+        }
     }
 }
 
