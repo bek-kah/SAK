@@ -65,8 +65,8 @@ extension WorkoutTileView {
                 .foregroundStyle(.secondary)
                 .sheet(isPresented: $showingEditWorkoutView) {
                     EditWorkoutView(
-                        selectedDay: $selectedDay,
                         workout: workout,
+                        workoutSession: workoutSession,
                         deleteSessions: deleteSessions
                     )
                 }

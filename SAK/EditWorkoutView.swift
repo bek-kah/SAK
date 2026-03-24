@@ -11,10 +11,9 @@ struct EditWorkoutView: View {
     @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
     
-    @Binding var selectedDay: Int
-    
     @Query var sessions: [WorkoutSession]
     var workout: Workout
+    var workoutSession: WorkoutSession
     
     var deleteSessions: (UUID) -> Void
     
@@ -32,12 +31,12 @@ struct EditWorkoutView: View {
     }
     
     init(
-        selectedDay: Binding<Int>,
         workout: Workout,
+        workoutSession: WorkoutSession,
         deleteSessions: @escaping (UUID) -> Void
     ) {
-        self._selectedDay = selectedDay
         self.workout = workout
+        self.workoutSession = workoutSession
         self.name = workout.name
         self.weekday = workout.weekday
         self.draftExercises = workout.sortedExercises.map {
@@ -181,7 +180,7 @@ struct EditWorkoutView: View {
         workout: Workout,
         workoutID: UUID
     ) {
-        guard let sessions = findSessions(workoutID: workoutID, after: getSelectedDate(selectedDay)) else { return }
+        guard let sessions = findSessions(workoutID: workoutID, after: workoutSession.date) else { return }
         
         for session in sessions {
             
@@ -208,7 +207,7 @@ struct EditWorkoutView: View {
 
 
 #Preview {
-    EditWorkoutView(selectedDay: .constant(constantSelectedDay), workout: .fake(0), deleteSessions: { _ in })
+    EditWorkoutView(workout: .fake(0), workoutSession: .fake(0), deleteSessions: { _ in })
 }
 
 #Preview {

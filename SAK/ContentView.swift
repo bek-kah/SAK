@@ -80,10 +80,8 @@ struct ContentView: View {
         }
         .onAppear(perform: requestHealthKitAccess)
         .onChange(of: selectedDate) { _, newDate in
-            withAnimation {
-                selectedDay = getSelectedDay(newDate)
-                currentWeekIndex = selectedDay / 7
-            }
+            selectedDay = getSelectedDay(newDate)
+            currentWeekIndex = selectedDay / 7
         }
     }
 }
