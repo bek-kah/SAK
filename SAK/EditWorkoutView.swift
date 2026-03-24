@@ -140,6 +140,8 @@ struct EditWorkoutView: View {
         
         let existingExercisesByID = Dictionary(uniqueKeysWithValues: workout.exercises.map { ($0.id, $0) } )
         
+        /// Since Exercise is a class, editing them makes immediate changes.
+        /// Therefore, we create a ExerciseDraft with the same information and pass in its variables back to the Exercise when user decides to save modification.
         workout.exercises = draftExercises.map { draftExercise in
             if let existing = existingExercisesByID[draftExercise.id] {
                 existing.name = draftExercise.name
@@ -176,6 +178,7 @@ struct EditWorkoutView: View {
         }
     }
     
+    /// Update every current and future WorkoutSession
     func updateSessions(
         workout: Workout,
         workoutID: UUID
@@ -198,7 +201,11 @@ struct EditWorkoutView: View {
                 if let existing = completionByID[exercise.id] {
                     return existing
                 } else {
-                    return ExerciseCompletion(exerciseID: exercise.id)
+                    return ExerciseCompletion(
+                        exerciseID: exercise.id,
+                        name: exercise.name,
+                        position: exercise.position
+                    )
                 }
             }
         }

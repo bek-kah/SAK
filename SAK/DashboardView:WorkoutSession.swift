@@ -24,11 +24,16 @@ extension DashboardView {
             }
             let newSession = createSession(
                 workoutID: todaysWorkout.id,
+                name: todaysWorkout.name,
                 date: date
             )
             
             newSession.completions = todaysWorkout.exercises.map {
-                ExerciseCompletion(exerciseID: $0.id)
+                ExerciseCompletion(
+                    exerciseID: $0.id,
+                    name: $0.name,
+                    position: $0.position
+                )
             }
             
             modelContext.insert(newSession)
@@ -64,10 +69,12 @@ extension DashboardView {
     
     func createSession(
         workoutID: UUID,
+        name: String,
         date: Date
     ) -> WorkoutSession {
         let session = WorkoutSession(
             workoutID: workoutID,
+            name: name,
             date: date
         )
         modelContext.insert(session)

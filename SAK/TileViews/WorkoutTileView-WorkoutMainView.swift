@@ -2,12 +2,6 @@ import SwiftData
 import SwiftUI
 
 extension WorkoutTileView {
-    var exercisesWithCompletions: [(exercise: Exercise, completion: ExerciseCompletion)] {
-        workout.sortedExercises.compactMap { exercise in
-            guard let completion = workoutSession.completions.first(where: { $0.exerciseID == exercise.id }) else { return nil }
-            return (exercise, completion)
-        }
-    }
     
     var workoutMainView: some View {
         VStack(alignment: .leading) {
@@ -35,10 +29,10 @@ extension WorkoutTileView {
             }
             .padding(.bottom)
             
-            ForEach(exercisesWithCompletions, id: \.exercise.id) { exercise, completion in
+            ForEach(workoutSession.completions, id: \.id) { completion in
                 HStack {
                     Button {
-                        toggleCompletion(for: exercise.id)
+                        toggleCompletion(for: completion.exerciseID)
                     } label: {
                         Image(systemName: completion.isComplete ? "checkmark.circle.fill" : "circle")
                             .resizable()
@@ -46,7 +40,7 @@ extension WorkoutTileView {
                     }
                     .padding(.trailing, 5)
                     
-                    Text(exercise.name)
+                    Text(completion.name)
                         .font(.system(size: 16, weight: .regular))
                         .fontWidth(.expanded)
                 }

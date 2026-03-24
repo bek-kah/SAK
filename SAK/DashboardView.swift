@@ -104,7 +104,11 @@ extension DashboardView {
             GridRow {
                 if let todaysWorkout = todaysWorkout, let todaysWorkoutSession = todaysWorkoutSession {
                     SquareTileView(
-                        currentType: .workout(todaysWorkout, todaysWorkoutSession, deleteSessions),
+                        currentType: .workout(
+                            todaysWorkout,
+                            todaysWorkoutSession,
+                            deleteSessions
+                        ),
                         selectedDay: $selectedDay
                     )
                     .gridCellColumns(2)

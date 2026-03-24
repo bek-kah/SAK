@@ -1,6 +1,9 @@
 import Foundation
 import SwiftData
 
+/// Arrays saved to SwiftData don't maintain their order, which is why Exercise and ExerciseCompletion have a position variable that Workout and WorkoutSession use to compute sortedExercises and sortedCompletions.
+/// It's crucial that each elements of Arrays with position variables are properly updated when they are those Arrays are changed. [Deletion, Insertion, Change of Order]
+
 @Model
 class Workout {
     var id: UUID
@@ -53,13 +56,16 @@ class Exercise: Equatable {
 class WorkoutSession {
     var id: UUID
     var workoutID: UUID
-    var name: String = ""
+    var name: String
     var date: Date
     var completions: [ExerciseCompletion] = []
+    var sortedCompletions: [ExerciseCompletion] {
+        completions.sorted(by: { $0.position < $1.position })
+    }
     
     init(
         workoutID: UUID,
-        name: String = "",
+        name: String,
         date: Date
     ) {
         self.id = UUID()
@@ -70,10 +76,14 @@ class WorkoutSession {
     
     static func fake(_ weekday: Int) -> WorkoutSession {
         let workout = Workout.fake(weekday)
-        let session = WorkoutSession(workoutID: workout.id, date: Date())
+        let session = WorkoutSession(workoutID: workout.id, name: workout.name, date: Date())
         session.completions = workout.exercises
             .sorted { $0.position < $1.position }
-            .map { ExerciseCompletion(exerciseID: $0.id) }
+            .map { ExerciseCompletion(
+                exerciseID: $0.id,
+                name: $0.name,
+                position: $0.position
+            ) }
         
         return session
     }
@@ -82,15 +92,21 @@ class WorkoutSession {
 @Model
 class ExerciseCompletion {
     var id: UUID
+    var name: String
     var exerciseID: UUID
     var isComplete: Bool
+    var position: Int
     
     init(
         exerciseID: UUID,
+        name: String,
+        position: Int
     ) {
         self.id = UUID()
+        self.name = name
         self.exerciseID = exerciseID
         self.isComplete = false
+        self.position = position
     }
 }
 

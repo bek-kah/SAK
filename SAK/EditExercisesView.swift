@@ -32,17 +32,6 @@ struct EditExercisesView: View {
                         ForEach(sortedExercises, id: \.id) { exercise in
                             HStack {
                                 Text(exercise.name)
-//                                Spacer()
-//                                Button("", systemImage: "info.circle.fill") {
-//                                    showingExerciseInfo[exercise.id] = true
-//                                }
-//                                .popover(isPresented: Binding(
-//                                    get: { showingExerciseInfo[exercise.id] ?? false },
-//                                    set: { showingExerciseInfo[exercise.id] = $0 }
-//                                )) {
-//                                    Text(exercise.id.uuidString)
-//                                        .presentationCompactAdaptation(.popover)
-//                                }
                             }
                         }
                         .onMove(perform: move)
