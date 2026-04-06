@@ -141,7 +141,7 @@ struct EditWorkoutView: View {
         let existingExercisesByID = Dictionary(uniqueKeysWithValues: workout.exercises.map { ($0.id, $0) } )
         
         /// Since Exercise is a class, editing them makes immediate changes.
-        /// Therefore, we create a ExerciseDraft with the same information and pass in its variables back to the Exercise when user decides to save modification.
+        /// Therefore, we create an ExerciseDraft with the same information and pass in its variables back to the Exercise when the user decides to save their modification.
         workout.exercises = draftExercises.map { draftExercise in
             if let existing = existingExercisesByID[draftExercise.id] {
                 existing.name = draftExercise.name
@@ -186,7 +186,6 @@ struct EditWorkoutView: View {
         guard let sessions = findSessions(workoutID: workoutID, after: workoutSession.date) else { return }
         
         for session in sessions {
-            
             // Adjust the weekday of each session to match the updated workout
             session.name = name
             let sessionWeekday = Calendar.current.component(.weekday, from: session.date) - 1
@@ -199,6 +198,7 @@ struct EditWorkoutView: View {
             // Build new completions array in workout.exercises order
             session.completions = workout.exercises.map { exercise in
                 if let existing = completionByID[exercise.id] {
+                    existing.position = exercise.position
                     return existing
                 } else {
                     return ExerciseCompletion(
@@ -207,6 +207,10 @@ struct EditWorkoutView: View {
                         position: exercise.position
                     )
                 }
+            }
+            print("Updated sortedCompletions:")
+            for completion in session.completions {
+                print(completion.name)
             }
         }
     }

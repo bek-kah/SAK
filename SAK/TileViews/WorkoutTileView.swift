@@ -8,7 +8,7 @@ struct WorkoutTileView: View {
     @Binding var selectedDay: Int
     
     var workout: Workout
-    @Bindable var workoutSession: WorkoutSession
+    var workoutSession: WorkoutSession
     var deleteSessions: (UUID) -> Void
     
     @State var showingDeleteAlert: Bool = false

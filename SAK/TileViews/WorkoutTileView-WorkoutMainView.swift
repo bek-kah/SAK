@@ -29,7 +29,7 @@ extension WorkoutTileView {
             }
             .padding(.bottom)
             
-            ForEach(workoutSession.completions, id: \.id) { completion in
+            ForEach(workoutSession.sortedCompletions, id: \.id) { completion in
                 HStack {
                     Button {
                         toggleCompletion(for: completion.exerciseID)
@@ -68,7 +68,7 @@ extension WorkoutTileView {
                 Spacer()
                 
                 NavigationLink {
-                    // WorkoutView(workout: workout, selectedDay: $selectedDay)
+                    WorkoutView(workoutSession: workoutSession)
                 }
                 label: {
                     if !allExercisesComplete {
@@ -84,14 +84,14 @@ extension WorkoutTileView {
                         }
                     }
                 }
+                .animation(.default, value: allExercisesComplete)
+                .animation(.default, value: someExercisesComplete)
                 .foregroundStyle(.secondary)
                 .disabled(allExercisesComplete)
                 
             }
             .padding(.top)
             .fontWidth(.expanded)
-            .animation(.easeInOut, value: allExercisesComplete)
-            .animation(.easeInOut, value: someExercisesComplete)
         }
         .padding()
     }
