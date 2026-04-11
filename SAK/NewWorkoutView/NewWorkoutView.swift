@@ -2,16 +2,21 @@ import SwiftData
 import SwiftUI
 
 struct NewWorkoutView: View {
-    @Environment(\.modelContext) var modelContext
     @Environment(\.dismiss) var dismiss
     @FocusState var focusedField: Bool
     
-    @State private var name: String = ""
-    @State private var weekday: Int
-    @State private var exercises: [Exercise] = []
+    @State private var viewModel: ViewModel
     
-    init(selectedDay: Int) {
-        weekday = getWeekdayIndex(selectedDay)
+    private var refreshWorkouts: () -> Void
+    
+    init(
+        modelContext: ModelContext,
+        selectedDay: Int,
+        refreshWorkouts: @escaping () -> Void
+    ) {
+        let viewModel = ViewModel(selectedDay: selectedDay, modelContext: modelContext)
+        _viewModel = State(initialValue: viewModel)
+        self.refreshWorkouts = refreshWorkouts
     }
     
     @State private var showPicker: Bool = false
@@ -19,16 +24,16 @@ struct NewWorkoutView: View {
     var body: some View {
         NavigationStack {
             List {
-                TextField("Name", text: $name)
+                TextField("Name", text: $viewModel.name)
                     .focused($focusedField)
                 
                 NavigationLink {
-                    NewExercisesView(exercises: $exercises)
+                    NewExercisesView(exercises: $viewModel.exercises)
                 } label: {
                     HStack {
                         Text("Exercises")
                         Spacer()
-                        Text("\(exercises.count)")
+                        Text("\(viewModel.exercises.count)")
                             .foregroundStyle(.secondary)
                     }
                 }
@@ -41,7 +46,7 @@ struct NewWorkoutView: View {
                     HStack {
                         Text("Day")
                         Spacer()
-                        Text(weekdays[weekday])
+                        Text(weekdays[viewModel.weekday])
                             .foregroundStyle(.secondary)
                         Image(systemName: "chevron.up.chevron.down")
                             .foregroundStyle(.secondary)
@@ -50,7 +55,7 @@ struct NewWorkoutView: View {
                 }
                 
                 if showPicker {
-                    Picker("Day", selection: $weekday) {
+                    Picker("Day", selection: $viewModel.weekday) {
                         ForEach(0..<weekdays.count, id: \.self) {
                             Text(weekdays[$0])
                                 .font(.system(size: 16, weight: .regular))
@@ -73,26 +78,26 @@ struct NewWorkoutView: View {
                 
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Create", systemImage: "checkmark", role: .cancel) {
-                        let workout = Workout(
-                            name: name.trimmingCharacters(in: .whitespacesAndNewlines),
-                            weekday: weekday,
-                            exercises: exercises
-                        )
-                        modelContext.insert(workout)
+                        viewModel.createWorkout(completion: refreshWorkouts)
                         dismiss()
                     }
-                    .disabled(name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                    .disabled(viewModel.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 }
             }
             .onAppear {
                 focusedField = true
             }
         }
-
     }
 }
 
-
 #Preview {
-    NewWorkoutView(selectedDay: 0)
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: Workout.self, configurations: config)
+    NewWorkoutView(
+        modelContext: container.mainContext,
+        selectedDay: 0,
+        refreshWorkouts: {}
+    )
+    .modelContainer(container)
 }

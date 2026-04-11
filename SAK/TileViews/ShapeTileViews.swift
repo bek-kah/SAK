@@ -1,16 +1,23 @@
+import SwiftData
 import SwiftUI
 
 struct SquareTileView: View {
     enum TileViewType {
         case weight(Weight)
         case activity(Activity)
-        case workout(Workout, WorkoutSession, (UUID) -> Void)
+        case workout(
+            ModelContext,
+            Workout,
+            WorkoutSession,
+            (UUID, [WorkoutSession]) -> (),
+            Binding<Bool>
+        )
         case none
     }
     
     var currentType: TileViewType = .none
     
-    @Binding var selectedDay: Int
+    var selectedDay: Int
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
@@ -32,12 +39,19 @@ struct SquareTileView: View {
             case .activity(let activity):
                 ActivityTileView(activity: activity)
                 
-            case .workout(let workout, let session, let deleteSessions):
+            case .workout(
+                let modelContext,
+                let workout,
+                let session,
+                let deleteSessions,
+                let refresh
+            ):
                 WorkoutTileView(
-                    selectedDay: $selectedDay,
+                    modelContext: modelContext,
                     workout: workout,
                     workoutSession: session,
-                    deleteSessions: deleteSessions
+                    deleteSessions: deleteSessions,
+                    refresh: refresh
                 )
                 
             case .none:

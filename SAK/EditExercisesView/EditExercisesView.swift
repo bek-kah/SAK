@@ -3,14 +3,14 @@ import SwiftUI
 struct EditExercisesView: View {
     
     @Binding var sortedExercises: [ExerciseDraft]
-    @State private var name: String = ""
-    @State private var showingExerciseInfo: [UUID: Bool] = [:]
+    
+    @State private var viewModel: ViewModel
     
     init(sortedExercises: Binding<[ExerciseDraft]>) {
         _sortedExercises = sortedExercises
-        for sortedExercise in sortedExercises {
-            showingExerciseInfo[sortedExercise.id] = false
-        }
+        
+        let viewModel = ViewModel(sortedExercises: sortedExercises.wrappedValue)
+        _viewModel = State(initialValue: viewModel)
     }
     
     var body: some View {
@@ -18,12 +18,12 @@ struct EditExercisesView: View {
             List {
                 Section("Add Exercise") {
                     HStack {
-                        TextField("Name", text: $name)
+                        TextField("Name", text: $viewModel.name)
                         Spacer()
-                        Button("add", action: appendExercise)
+                        Button("add", action: viewModel.appendExercise)
                             .buttonStyle(.borderedProminent)
                             .font(.system(size: 14, weight: .regular))
-                            .disabled(name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                            .disabled(viewModel.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                     }
                 }
                 
@@ -34,8 +34,8 @@ struct EditExercisesView: View {
                                 Text(exercise.name)
                             }
                         }
-                        .onMove(perform: move)
-                        .onDelete(perform: delete)
+                        .onMove(perform: viewModel.move)
+                        .onDelete(perform: viewModel.delete)
                     }
                 }
                 
@@ -47,27 +47,9 @@ struct EditExercisesView: View {
                 EditButton()
             }
         }
-    }
-    
-    func move(from source: IndexSet, to destination: Int) {
-        sortedExercises.move(fromOffsets: source, toOffset: destination)
-        for i in sortedExercises.indices {
-            sortedExercises[i].position = i
+        .onChange(of: viewModel.sortedExercises) { _, newValue in
+            sortedExercises = newValue
         }
-    }
-
-    func delete(at offsets: IndexSet) {
-        sortedExercises.remove(atOffsets: offsets)
-        for i in sortedExercises.indices {
-            sortedExercises[i].position = i
-        }
-    }
-
-    func appendExercise() {
-        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmed.isEmpty else { return }
-        sortedExercises.append(ExerciseDraft(id: UUID(), name: trimmed, position: sortedExercises.count))
-        name = ""
     }
 }
 
